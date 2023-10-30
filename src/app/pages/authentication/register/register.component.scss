@@ -1,0 +1,87 @@
+.showcase {
+	position: relative;
+    background-color: white;
+	display: flex;
+    flex-wrap: wrap;
+}
+
+.showcase-content {
+	position: relative;
+	z-index: 2;
+	width: 550px;
+	height: 800px;
+	background: rgb(219, 208, 208);
+    color: black;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	text-align: left;
+	padding: 60px 65px;
+	margin-top: 100px;
+	margin-bottom: 30px;
+	border-radius: 10px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.45);
+}
+
+.sign-form {
+	width: 100%;
+	margin-bottom: 20px;
+	border-radius: 10px;
+    h1 {
+        margin-bottom: 20px;
+    }
+    .info {
+        padding: 5px 0;
+        .form-label {
+            color: #fff;
+        }
+        .label {
+            margin-bottom: 30px;
+            width: 100%;
+            height: 50px;
+            border-radius: 5px;
+            border: none;
+            padding: 10px;
+            font-size: inherit;
+        }
+    }
+    .btn {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+}
+
+.btn-primary {
+	height: 50px;
+	border-radius: 5px;
+	background: rgb(28, 109, 59);
+	color: #fff;
+	font-size: inherit;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+}
+
+.divider {
+    width: 420px;
+    border-top: 3px solid rgb(28, 109, 59); /* Change the color and style as needed */
+    margin: 8px 0; /* Adjust the margin to control the spacing */
+}
+
+.signup {
+    margin-top: 20px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+    color: black;
+}
+
+.p-label {
+    font-size: 16px;
+    margin-right: 10px;
+}
