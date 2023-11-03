@@ -1,0 +1,67 @@
+<div class="row header-row">
+    <p class="header">{{header}}</p>
+</div>
+<div class="row">
+    <div class="col-4 filter-panel">
+        <mat-card>
+            <mat-card-content>
+              
+              <div class="select-category">
+                <mat-label>Category</mat-label>
+                <mat-select [(ngModel)]="selectedCategory" name="selectedCategory">
+                  <mat-option value="all">All</mat-option>
+                  <mat-option value="clothing">Clothing</mat-option>
+                  <mat-option value="shoes">Shoes</mat-option>
+                </mat-select>
+            </div>
+            
+            <mat-divider></mat-divider>
+            
+            <div class="checkbox-color">
+              <mat-label>Colors</mat-label>
+              <div>
+                <mat-checkbox [(ngModel)]="checkBox.red" name="red">Red</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox [(ngModel)]="checkBox.black" name="black">Black</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox [(ngModel)]="checkBox.white" name="white">White</mat-checkbox>
+              </div>
+            </div>
+            
+            <mat-divider></mat-divider>
+
+            <div class="filter-btn">
+              <button mat-raised-button color="primary" (click)="getFilteredData()">Apply Filters</button>
+            </div>
+            </mat-card-content>
+          </mat-card>
+    </div>
+    <div class="col-8">
+        <div *ngIf="products.length > 0" class="container-fluid">
+            <div class="movie-grid">
+                <div *ngFor="let product of products; let i = index" class="movie-tile">
+                    <div class="movie-card">
+                        <div class="movie-header">
+                            <h2 class="movie-title">{{product.name}}</h2>
+                        </div>
+                        <div class="movie-content">
+                            <img class="movie-poster" src="{{product.image}}">
+                            <p class="movie-plot">
+                                {{product.description}}
+                            </p>
+                        </div>
+                        <div class="movie-actions">
+                            <button class="info-button">INFO</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,39 @@
+<div class="home">
+    <mat-card class="website-card">
+        <mat-card-header>
+            <mat-card-title>Find your favourite clothes and shoes!</mat-card-title>
+        </mat-card-header>
+      <img src="assets/man-shoes-background.jpg" alt="Website Image" class="website-image">
+    </mat-card>
+    
+    <div class="shopping-options">
+        <mat-card class="shopping-card" (click)="navigateToMaleShopping()">
+          <img src="assets/men-shoes.jpeg" alt="Male Clothes" class="shopping-image">
+          <p class="shopping-description">Constructed from luxury nylons, leathers, and custom hardware, featuring sport details such as hidden breathing vents, waterproof + antimicrobial linings, and more.</p>
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+              <button mat-button class="btn">Shop for Men</button>
+            </div>
+            <div class="col-4"></div>
+          </div>
+        </mat-card>
+    
+        <mat-card class="shopping-card" (click)="navigateToFemaleShopping()">
+          <img src="assets/women-shoes.jpeg" alt="Female Clothes" class="shopping-image">
+          <p class="shopping-description">Constructed from luxury nylons, leathers, and custom hardware, featuring sport details such as hidden breathing vents, waterproof + antimicrobial linings, and more.</p>
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+              <button mat-button class="btn">Shop for Women</button>
+            </div>
+            <div class="col-4"></div>
+          </div>
+        </mat-card>
+      </div>
+</div>
+<div class="footer">
+    <p>&copy; 2023 Your E-commerce Shop</p>
+    <p>Contact us: contact@yourshop.com</p>
+</div>
+  
