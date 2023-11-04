@@ -1,11 +1,11 @@
 .header-row {
     height: 100px;
-    background-color: green;
+    background-color: rgb(0, 60, 128);
     .header {
         margin-top: 30px;
         margin-left: 30px;
         font-size: 45px;
-        color: black;
+        color: white;
     }
 }
 
@@ -13,7 +13,31 @@
     padding: 20px;
 }
 
-.movie-grid {
+////////// FILTERS ////////////
+
+.filter-panel {
+    padding: 16px;
+    background-color: #f5f5f5;
+    font-size: 20px;
+    
+    .checkbox-color {
+        margin-top: 10px;
+        font-size: 20px !important;
+        margin-bottom: 10px;
+    }
+
+    .filter-btn {
+        margin-top: 20px;
+    }
+}
+  
+  .filter-option {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+/////////// PRODUCTS ////////////
+.product-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
@@ -25,11 +49,11 @@
 }
 
 
-.movie-tile {
-    flex-basis: calc(50% - 30px); /* Two columns with gutter */
+.product-tile {
+    flex-basis: calc(33.33%  - 30px); /* Two columns with gutter */
 }
 
-.movie-card {
+.product-card {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 20px;
@@ -37,62 +61,49 @@
 	background-color: rgb(243, 240, 240);
 }
 
-.movie-card:hover {
+.product-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.movie-header {
+.product-header {
     margin-bottom: 10px;
 }
 
-.movie-title {
+.product-title {
     font-size: 20px;
     margin: 0;
 }
 
-.movie-subtitle {
+.product-subtitle {
     font-size: 14px;
     color: #888;
     margin: 0;
 }
 
-.movie-content {
+.product-content {
     text-align: center;
 }
 
-.movie-poster {
+.product-poster {
     max-width: 100%;
     height: auto;
+    background-color: white;
     margin-bottom: 10px;
 }
 
-.movie-plot {
+.product-description {
     margin-top: 20px;
     text-align: justify;
 }
 
-.movie-actions {
+.product-actions {
     display: flex;
     justify-content: center;
     margin-top: 10px;
 }
 
-.info-button {
-    background-color: #ffd740;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.info-button:hover {
-    background-color: #eb8e23;
-}
-
-.movie-poster {
+.product-poster {
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
@@ -100,28 +111,3 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s, box-shadow 0.3s;
 }
-
-//////FILTERS/////////////////
-.filter-panel {
-    padding: 16px;
-    background-color: #f5f5f5;
-    font-size: 20px;
-    
-    .select-category {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    
-    .checkbox-color {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    .filter-btn {
-        margin-top: 20px;
-    }
-}
-  
-  .filter-option {
-    width: 100%;
-    margin-bottom: 16px;
-  }

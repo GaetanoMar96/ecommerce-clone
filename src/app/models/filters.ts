@@ -9,12 +9,13 @@ export interface CheckBoxColor {
     black?: boolean;
     green?: boolean;
     brown?: boolean;
+    pink?: boolean;
+    purple?: boolean;
+    blue?: boolean;
 }
 
-export interface CheckBoxSize { 
-    l?: boolean;
-    x?: boolean;
-    xl?: boolean;
-    s?: boolean;
-    m?: boolean;
+export interface CheckBoxBrand { 
+    nike?: boolean;
+    converse?: boolean;
+    adidas?: boolean;
 }

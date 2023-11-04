@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, Input, ViewChild } from '@angular/core';
 import { AuthService } from './../../../services/index';
-import { Product, CheckBoxColor, PriceRange } from './../../../models/index';
+import { Product, CheckBoxColor, CheckBoxBrand, PriceRange } from './../../../models/index';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatSlider } from '@angular/material/slider';
 
 
@@ -13,27 +13,36 @@ import { MatSlider } from '@angular/material/slider';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   
-  @Input() header: string = 'MEN SECTION';
+  @Input() header: string = 'SECTION';
   sliderValue = 50;
 
   products: Product[] = [];
 
-  priceRange: PriceRange = {
+  //minPrice: number = 0; // Initial price range
+  //maxPrice: number = 200;
+  price: PriceRange = {
     min: 0,
-    max: 500
+    max: 200
   }
 
   value = 500;
 
-  checkBox: CheckBoxColor = {
+  checkBoxColor: CheckBoxColor = {
     red: false,
     white: false,
     black: false,
     green: false,
     brown: false,
+    pink: false,
+    purple: false,
+    blue: false
   };
 
-  selectedCategory: string = 'all';
+  checkBoxBrand: CheckBoxBrand = {
+    nike: false,
+    adidas: false,
+    converse: false
+  }
 
   selectedColors: string[] = [];
 
@@ -46,33 +55,36 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {   
     this.products = [{
-        name: 'scarpa1',
-        description: 'Scarpa',
-        image: 'assets/shopping_home_female.jpg',
-        price: 9.99
+      name: 'run',
+      description:
+        'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
+      price: 80.0,
+      image: 'assets/adidas-run-black.png',
     },
     {
-        name: 'scarpa1',
-        description: 'Scarpa',
-        image: 'assets/shopping_home_female.jpg',
-        price: 9.99
+      name: 'run',
+      description:
+        'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
+      price: 80.0,
+      image: 'assets/adidas-run-black.png',
     },
     {
-        name: 'scarpa1',
-        description: 'Scarpa',
-        image: 'assets/shopping_home_female.jpg',
-        price: 9.99
+      name: 'run',
+      description:
+        'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
+      price: 80.0,
+      image: 'assets/adidas-run-black.png',
     },{
-        name: 'scarpa1',
-        description: 'Scarpa',
-        image: 'assets/shopping_home_female.jpg',
-        price: 9.99
-    }] 
+      name: 'run',
+      description:
+        'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
+      price: 80.0,
+      image: 'assets/adidas-run-black.png',
+    },] 
   }
 
   ngOnChanges() {
     console.log(this.value)
-    console.log(this.selectedCategory)
   } 
 
   goToProduct(): void {
@@ -80,7 +92,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   updateSelectedColors(color: any): void {
-    if (this.checkBox.black) {
+    if (this.checkBoxColor.black) {
       this.selectedColors.push(color);
     } else {
       const index = this.selectedColors.indexOf(color);
@@ -92,8 +104,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   getFilteredData(): void {
     //call service
-    console.log(this.selectedCategory)
-    console.log(this.checkBox)
+    console.log(this.checkBoxColor)
+    console.log(this.checkBoxBrand)
+    console.log('Price Range:', this.price.min, this.price.max);
   }
 
   ngOnDestroy(): void {

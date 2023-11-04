@@ -10,10 +10,10 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   navigateToMaleShopping() {
-    this.router.navigate(['/male']);
+    this.router.navigate(['/male-products']);
   }
 
   navigateToFemaleShopping() {
-    this.router.navigate(['/female']);
+    this.router.navigate(['/female-products']);
   }
 }

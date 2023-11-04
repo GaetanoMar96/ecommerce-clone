@@ -1,0 +1,24 @@
+<mat-dialog-content class="mat-typography">
+    <h2>Item added to your cart</h2>
+    <mat-divider class="divider"></mat-divider>
+    <div class="row">
+        <div class="col-4 product-image">
+            <img [src]="product.images[0].image">
+        </div>
+        <div class="col-8 product-info">
+            <p>{{product.brand}} - {{product.name}}</p>
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-4">
+            <button mat-button (click)="goToCart()">View cart</button>
+        </div>
+        <div class="col-4">
+            <button mat-button (click)="goToHome()">Continue shopping</button>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</mat-dialog-content>
+    

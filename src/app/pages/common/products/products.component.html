@@ -1,36 +1,71 @@
-<div class="row header-row">
+
+<div class="container-fluid">
+  <div class="row header-row">
     <p class="header">{{header}}</p>
 </div>
 <div class="row">
     <div class="col-4 filter-panel">
         <mat-card>
             <mat-card-content>
-              
-              <div class="select-category">
-                <mat-label>Category</mat-label>
-                <mat-select [(ngModel)]="selectedCategory" name="selectedCategory">
-                  <mat-option value="all">All</mat-option>
-                  <mat-option value="clothing">Clothing</mat-option>
-                  <mat-option value="shoes">Shoes</mat-option>
-                </mat-select>
-            </div>
             
+            <h2>Shop By</h2>
+
+            <mat-slider
+            [min]="0"
+            [max]="200"
+            [step]="10"
+            thumbLabel
+            value="0">
+            <input matSliderStartThumb [(ngModel)]="price.min" #slider>
+            <input matSliderEndThumb [(ngModel)]="price.max" #slider>
+          </mat-slider>
+
+      <p>Price Range: {{ price.min }} - {{ price.max }}</p>
+
             <mat-divider></mat-divider>
             
             <div class="checkbox-color">
-              <mat-label>Colors</mat-label>
+              <mat-label>Color</mat-label>
               <div>
-                <mat-checkbox [(ngModel)]="checkBox.red" name="red">Red</mat-checkbox>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.red" name="red">Red</mat-checkbox>
               </div>
               <div>
-                <mat-checkbox [(ngModel)]="checkBox.black" name="black">Black</mat-checkbox>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.black" name="black">Black</mat-checkbox>
               </div>
               <div>
-                <mat-checkbox [(ngModel)]="checkBox.white" name="white">White</mat-checkbox>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.white" name="white">White</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.brown" name="brown">Brown</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.blue" name="blue">Blue</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.pink" name="pink">Pink</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.purple" name="purple">Purple</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.green" name="green">Green</mat-checkbox>
               </div>
             </div>
             
             <mat-divider></mat-divider>
+
+            <div class="checkbox-color">
+              <mat-label>Brand</mat-label>
+              <div>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxBrand.nike" name="nike">Nike</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxBrand.adidas" name="adidas">Adidas</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox color=primary [(ngModel)]="checkBoxBrand.converse" name="converse">Converse</mat-checkbox>
+              </div>
+            </div>
 
             <div class="filter-btn">
               <button mat-raised-button color="primary" (click)="getFilteredData()">Apply Filters</button>
@@ -40,20 +75,17 @@
     </div>
     <div class="col-8">
         <div *ngIf="products.length > 0" class="container-fluid">
-            <div class="movie-grid">
-                <div *ngFor="let product of products; let i = index" class="movie-tile">
-                    <div class="movie-card">
-                        <div class="movie-header">
-                            <h2 class="movie-title">{{product.name}}</h2>
+            <div class="product-grid">
+                <div *ngFor="let product of products; let i = index" class="product-tile">
+                    <div class="product-card" (click)="goToProduct()">
+                        <div class="product-header">
+                            <h2 class="product-title">{{product.name}}</h2>
                         </div>
-                        <div class="movie-content">
-                            <img class="movie-poster" src="{{product.image}}">
-                            <p class="movie-plot">
+                        <div class="product-content">
+                            <img class="product-poster" src="{{product.image}}">
+                            <p class="product-description">
                                 {{product.description}}
                             </p>
-                        </div>
-                        <div class="movie-actions">
-                            <button class="info-button">INFO</button>
                         </div>
                     </div>
                 </div>
@@ -61,7 +93,7 @@
         </div>
     </div>
 </div>
-
+</div>
 
 
 

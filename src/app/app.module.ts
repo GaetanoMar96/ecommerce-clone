@@ -6,9 +6,13 @@ import { AppComponent } from './app.component';
 import { RegisterComponent, 
   LoginComponent, 
   HeaderComponent, 
+  FooterComponent,
   HomeComponent, 
   ProductsComponent, 
-  ProductComponent 
+  ProductComponent,
+  ProductDialogComponent,
+  MaleProductsComponent,
+  FemaleProductsComponent
 } from './pages/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +29,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
 
 @NgModule({
   declarations: [
@@ -32,9 +38,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RegisterComponent,
     LoginComponent,
     HeaderComponent,
+    FooterComponent,
     HomeComponent,
     ProductsComponent,
-    ProductComponent
+    ProductComponent,
+    ProductDialogComponent,
+    MaleProductsComponent,
+    FemaleProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +65,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatCardModule,
     MatSelectModule,
     MatSliderModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
