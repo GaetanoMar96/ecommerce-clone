@@ -5,7 +5,8 @@ import { RegisterComponent,
   HomeComponent,  
   ProductComponent,
   FemaleProductsComponent,
-  MaleProductsComponent } from './pages/index';
+  MaleProductsComponent,
+  SearchProductsComponent } from './pages/index';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'male-products', component: MaleProductsComponent },
   { path: 'female-products', component: FemaleProductsComponent },
+  { path: 'search-products', component: SearchProductsComponent },
   { path: 'product', component: ProductComponent },
   { path: '**', redirectTo: '' }
 ];

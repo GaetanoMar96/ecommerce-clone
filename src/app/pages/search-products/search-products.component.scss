@@ -1,0 +1,26 @@
+.row {
+    margin-top: 100px;
+  }
+  
+  .rowimg {
+      max-height: 100px;
+      width: 270px;
+      box-sizing: content-box;
+      transition: transform 450ms;
+      margin-right: 20px;
+      border-radius: 5px;
+      margin-left: 120px;
+      border: 1px solid #797979;
+      -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+      margin-bottom: 10px;
+      &:hover {
+        transform: scale(1.09);
+        cursor: pointer;
+      }
+    }
+  .largeposter {
+      max-height: 300px;
+    }

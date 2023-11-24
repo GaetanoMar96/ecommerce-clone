@@ -12,7 +12,8 @@ import { RegisterComponent,
   ProductComponent,
   ProductDialogComponent,
   MaleProductsComponent,
-  FemaleProductsComponent
+  FemaleProductsComponent,
+  SearchProductsComponent
 } from './pages/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -44,7 +45,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     ProductComponent,
     ProductDialogComponent,
     MaleProductsComponent,
-    FemaleProductsComponent
+    FemaleProductsComponent,
+    SearchProductsComponent
   ],
   imports: [
     BrowserModule,

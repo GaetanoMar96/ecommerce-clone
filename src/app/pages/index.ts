@@ -8,3 +8,4 @@ export * from './../pages/product/product.component';
 export * from './../pages/product/dialog-product/dialog-product.component';
 export * from './../pages/male-products/male-products.component';
 export * from './../pages/female-products/female-products.component';
+export * from './../pages/search-products/search-products.component';

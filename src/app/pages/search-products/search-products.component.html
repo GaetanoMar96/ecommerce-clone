@@ -1,0 +1,8 @@
+<div class="container" *ngIf="movies.length != 0">
+    <div class="row" *ngFor="let row of movies">
+      <ng-container class="col" *ngFor="let movie of row">
+        <img src="{{movie.image}}" alt="{{ movie.title }}"
+          class="rowimg largeposter" />
+      </ng-container>
+    </div>
+  </div>

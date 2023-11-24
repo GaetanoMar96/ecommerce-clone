@@ -1,9 +1,19 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 100px;">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <div
         class="collapse navbar-collapse justify-content-end">
+        <div class="search" style="font-size: 20px; margin-right: 10px;">
+          <input class="input" *ngIf="showSearchBar"
+          type="text" 
+          placeholder="Search by brand, shoe..."
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="search()">
+          <mat-icon class="material-icons" (click)="toggleSearchBar()">search</mat-icon>
+        </div>      
+      
+
         <button mat-icon-button (click)="goToCart()">
             <mat-icon class="cart">shopping_cart</mat-icon>
         </button>

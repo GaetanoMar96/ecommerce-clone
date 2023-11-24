@@ -91,8 +91,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     
   }
 
-  updateSelectedColors(color: any): void {
-    if (this.checkBoxColor.black) {
+  /*udateSelectedColors(color: string): void {
+    if (this.checkBoxColor) {
       this.selectedColors.push(color);
     } else {
       const index = this.selectedColors.indexOf(color);
@@ -100,7 +100,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.selectedColors.splice(index, 1);
       }
     }
-  }
+  }*/
 
   getFilteredData(): void {
     //call service
