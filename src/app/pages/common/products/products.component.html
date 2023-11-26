@@ -27,7 +27,7 @@
             <div class="checkbox-color">
               <mat-label>Color</mat-label>
               <div>
-                <mat-checkbox color=primary [(ngModel)]="checkBoxColor.red" name="red">Red</mat-checkbox>
+                <mat-checkbox class="single-checkbox" color=primary [(ngModel)]="checkBoxColor.red" name="red">Red</mat-checkbox>
               </div>
               <div>
                 <mat-checkbox color=primary [(ngModel)]="checkBoxColor.black" name="black">Black</mat-checkbox>
@@ -77,12 +77,12 @@
         <div *ngIf="products.length > 0" class="container-fluid">
             <div class="product-grid">
                 <div *ngFor="let product of products; let i = index" class="product-tile">
-                    <div class="product-card" (click)="goToProduct()">
+                    <div class="product-card" (click)="goToProduct(product)">
                         <div class="product-header">
                             <h2 class="product-title">{{product.name}}</h2>
                         </div>
                         <div class="product-content">
-                            <img class="product-poster" src="{{product.image}}">
+                            <img class="product-poster" src="{{product.images[0].imageBin}}">
                             <p class="product-description">
                                 {{product.description}}
                             </p>

@@ -1,8 +1,13 @@
-<div class="row header-row"></div>
 <div class="row">
+  <div class="navigation">
+    <span class="section-hover" (click)="goBack()">{{ section }}</span><span> / Product</span>
+  </div>
+</div>
+
+<div class="row" *ngIf="product != undefined">
     <div class="col-6">
         <div class="product-image">
-            <img [src]="product.images[0].image" alt="{{product.title}}">
+            <img [src]="product.images[0].imageBin" alt="{{product.name}}">
           </div>       
     </div>
     <div class="col-6">
@@ -18,13 +23,13 @@
               <p class="product-price">Price: ${{product.price}}</p>
               <div class="product-color">
                 <h2>Colors available</h2>
-                <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color" *ngFor="let data of product.images">
-                    <mat-button-toggle value="data.color">{{data.color}}</mat-button-toggle>
+                <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color" *ngFor="let image of product.images">
+                    <mat-button-toggle [value]="image.color" (click)="selectedColor(image.color)">{{image.color}}</mat-button-toggle>
                 </mat-button-toggle-group>
               </div>
               <div class="product-size">
                 <h2>Choose size</h2>
-                <mat-select [(value)]="size" (valueChange)="toggle()">
+                <mat-select [(ngModel)]="size" [(value)]="size" (valueChange)="toggle()">
                     <mat-option value="39">39</mat-option>
                     <mat-option value="40">40</mat-option>
                     <mat-option value="41">41</mat-option>

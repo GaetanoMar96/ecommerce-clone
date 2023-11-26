@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, Input, ViewChild } from '@angular/core';
-import { AuthService } from './../../../services/index';
+import { Component, OnDestroy, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { AuthService, ProductsService } from './../../../services/index';
 import { Product, CheckBoxColor, CheckBoxBrand, PriceRange } from './../../../models/index';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
@@ -9,7 +9,8 @@ import { MatSlider } from '@angular/material/slider';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   
@@ -18,8 +19,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   products: Product[] = [];
 
-  //minPrice: number = 0; // Initial price range
-  //maxPrice: number = 200;
   price: PriceRange = {
     min: 0,
     max: 200
@@ -49,58 +48,53 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor( 
     private authService: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder) {
+    private productsService: ProductsService) {
     
     }
 
   ngOnInit() {   
     this.products = [{
       name: 'run',
+      brand: 'nike',
       description:
         'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
       price: 80.0,
-      image: 'assets/adidas-run-black.png',
+      images: [{imageBin: 'assets/adidas-run-black.png', color: "blue"}]
     },
     {
       name: 'run',
+      brand: 'nike',
       description:
         'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
       price: 80.0,
-      image: 'assets/adidas-run-black.png',
+      images: [{imageBin: 'assets/adidas-run-black.png', color: "blue"}]
     },
     {
       name: 'run',
+      brand: 'nike',
       description:
         'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
       price: 80.0,
-      image: 'assets/adidas-run-black.png',
+      images: [{imageBin: 'assets/adidas-run-black.png', color: "blue"}]
     },{
       name: 'run',
+      brand: 'nike',
       description:
         'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
       price: 80.0,
-      image: 'assets/adidas-run-black.png',
+      images: [{imageBin: 'assets/adidas-run-black.png', color: "blue"}]
     },] 
   }
 
   ngOnChanges() {
-    console.log(this.value)
+    
   } 
 
-  goToProduct(): void {
-    
+  goToProduct(product: Product): void {
+    console.log(product)
+    this.productsService.setProduct(product);
+    this.router.navigate(['product'], { state: { section: this.header } })
   }
-
-  /*udateSelectedColors(color: string): void {
-    if (this.checkBoxColor) {
-      this.selectedColors.push(color);
-    } else {
-      const index = this.selectedColors.indexOf(color);
-      if (index !== -1) {
-        this.selectedColors.splice(index, 1);
-      }
-    }
-  }*/
 
   getFilteredData(): void {
     //call service

@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="navigation">
+      <span class="section-hover" (click)="goBack()">HOME</span><span> / CART</span>
+    </div>
+  </div>
+
+<div *ngIf="products.length == 0" class="empty-state">
+  <p>There are no products available.</p>
+  <button mat-button class="btn" routerLink="/home">Shop at least one item</button>
+</div>
+<div class="row product-header" *ngIf="products.length != 0">
+    <div class="col-8">
+      <div class="row">
+        <div class="col product-subheader">
+          <h3>Products</h3>
+        </div>
+      </div>
+      <div class="divider">
+        <mat-divider></mat-divider>
+      </div>
+      <div class="product-list" *ngFor="let product of products; let i = index">
+        <div class="row">
+          <div class="col-4">
+            <div class="product-image">
+              <img [src]="product.image" alt="{{product.name}}">
+            </div>    
+          </div>
+          <div class="col-4">
+            <div class="product-content">
+              <p>Color: {{product.color}}</p>
+              <p>Size: {{product.size}}</p>
+              <p>Price: €{{product.price}}</p>
+              <button class="remove-btn" (click)="removeProduct(i)">Remove</button>
+            </div>
+          </div>     
+        </div>
+        <div class="divider">
+          <mat-divider></mat-divider>
+        </div>
+        
+      </div>
+    </div>
+    <div class="col-4">
+        <div class="product-summary">
+              <h2 class="product-summary-title">
+                Order summary</h2>
+                
+              <div class="product-summary-content">
+                <p>Total: €{{total}}</p>
+              </div>
+
+              <button mat-button class="btn" (click)="checkout()">
+                <mat-icon>shopping_cart</mat-icon>
+                CHECKOUT
+              </button>
+  
+          </div>
+    </div>
+</div>
+</div>
+
+
+
