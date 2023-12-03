@@ -1,0 +1,24 @@
+<div class="product-list" *ngFor="let product of products; let i = index">
+    <div class="row">
+      <div class="col-4">
+        <div class="product-image">
+          <img [src]="product.image" alt="{{product.name}}">
+        </div>    
+      </div>
+      <div class="col-4">
+        <div class="product-content">
+          <p>Color: {{product.color}}</p>
+          <p>Size: {{product.size}}</p>
+          <p>Price: €{{product.price}}</p>
+          
+        </div>
+      </div>     
+    </div>
+    <div class="divider">
+      <mat-divider></mat-divider>
+    </div>
+    
+  </div>
+  <div class="product-summary-content">
+    <p>Total: €{{total}}</p>
+  </div>

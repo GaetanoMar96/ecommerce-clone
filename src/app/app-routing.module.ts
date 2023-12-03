@@ -7,7 +7,8 @@ import { RegisterComponent,
   FemaleProductsComponent,
   MaleProductsComponent,
   SearchProductsComponent,
-  CartComponent } from './pages/index';
+  CartComponent,
+  CheckoutComponent } from './pages/index';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'search-products', component: SearchProductsComponent },
   { path: 'product', component: ProductComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: '**', redirectTo: '' }
 ];
 

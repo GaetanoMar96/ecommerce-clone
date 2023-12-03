@@ -33,7 +33,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   checkout() {
-    
+    this.router.navigate(['checkout']);
   }
 
   removeProduct(index: number) {
