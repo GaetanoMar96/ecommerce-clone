@@ -1,5 +1,10 @@
 <div class="container">
     <div class="row">
+        <div class="navigation">
+          <span class="section-hover" (click)="goBack()">HOME</span><span> / CHECKOUT</span>
+        </div>
+      </div>
+    <div class="row">
         <div class="col" style="margin-top: 30px;">
             <p style="font-size: 30px; margin-bottom: 20px;">Shipping Address</p>
             <div class="row">
@@ -25,7 +30,12 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Post code</mat-label>
-                    <input matInput required [(ngModel)]="shipData.postcode">
+                    <input matInput required [(ngModel)]="shipData.postcode"
+                    pattern="\d{5}" maxlength="5"
+               #postcodeInput (blur)="validatePostalCode(postcodeInput.value)">
+               <div *ngIf="invalidPostalCode && postcodeInput.value.length !== 0">
+                Postal code must be exactly 5 digits and contain only numbers.
+            </div>
                 </mat-form-field>
             </div>
             <div class="row">

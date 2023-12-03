@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="navigation">
+            <span class="section-hover" (click)="goBack()">CHECKOUT</span><span> / PAYMENT</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="margin-top: 30px;">
+            
+            <div class="contact-info">
+                <mat-card class="card">
+                    <mat-card-content>Contact {{shipData.name}} {{shipData.surname}}</mat-card-content>
+                </mat-card>
+    
+                <mat-card class="card">
+                    <mat-card-content>Ship to: {{shipData.address}}, {{shipData.city}}, {{shipData.country}}</mat-card-content>
+                </mat-card>
+            </div>
+
+            <mat-card class="payment">
+                <mat-card-header>
+                    <mat-card-title>Choose Payment Method</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-radio-group [(ngModel)]="selectedMethod" class="payment-methods">
+                      <mat-radio-button value="credit_card" class="payment-option" (click)="showTestCardInfo()">
+                        <mat-icon>credit_card</mat-icon> Credit Card
+                      </mat-radio-button>
+                      <mat-card-content *ngIf="showTestCard">
+                        <p>Test Card Number: 4242 4242 4242 4242</p>
+                        <p>CVV: Any 3 digits</p>
+                    </mat-card-content>
+                      <mat-divider></mat-divider>
+                      <mat-radio-button value="cash" class="payment-option">
+                        <mat-icon>account_balance_wallet</mat-icon>Cash on delivery
+                      </mat-radio-button>
+                      <!-- Add more payment method options here -->
+                    </mat-radio-group>
+                  </mat-card-content>
+            </mat-card>
+
+            <button class="btn" color="primary" type="submit" (click)="onSubmit()">Confirm</button>
+        </div>
+        <div class="col">
+            <app-product-summary [products]="products" [total]="total"></app-product-summary>
+        </div>
+    </div>
+</div>

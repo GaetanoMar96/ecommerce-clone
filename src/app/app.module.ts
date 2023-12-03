@@ -16,12 +16,14 @@ import { RegisterComponent,
   SearchProductsComponent,
   CartComponent,
   CheckoutComponent,
-  ProductSummaryComponent
+  ProductSummaryComponent,
+  PaymentComponent
 } from './pages/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -52,7 +54,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     SearchProductsComponent,
     CartComponent,
     CheckoutComponent,
-    ProductSummaryComponent
+    ProductSummaryComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSelectModule,
     MatSliderModule,
     MatCheckboxModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatRadioModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}

@@ -1,8 +1,8 @@
-<div class="container" *ngIf="movies.length != 0">
-    <div class="row" *ngFor="let row of movies">
-      <ng-container class="col" *ngFor="let movie of row">
-        <img src="{{movie.image}}" alt="{{ movie.title }}"
-          class="rowimg largeposter" />
+<div class="container" *ngIf="products.length != 0">
+    <div class="row" *ngFor="let row of products">
+      <ng-container class="col" *ngFor="let product of row">
+        <img src="{{product.image}}" alt="{{ product.title }}"
+          class="rowimg largeposter" (click)="goToProduct(product)"/>
       </ng-container>
     </div>
   </div>

@@ -1,9 +1,9 @@
 // Import necessary modules
 import { Component, NgModule } from '@angular/core';
-import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Product, SelectedProduct, ShipData } from './../../models/index';
 import { Subscription } from'rxjs';
-import { DialogService, ProductsService } from './../../services/index';
+import { PaymentService, ProductsService } from './../../services/index';
 
 @Component({
   selector: 'app-checkout',
@@ -23,10 +23,14 @@ export class CheckoutComponent {
 
     products: SelectedProduct[] = [];
     total: number = 0
+    invalidPostalCode: boolean = false;
+
+    
     private productSubscription: Subscription = new Subscription();
 
-    constructor(private formBuilder: FormBuilder,
-        private productsService: ProductsService,) {
+    constructor(private router: Router,
+        private productsService: ProductsService,
+        private paymentService: PaymentService) {
         
     }
   
@@ -44,6 +48,27 @@ export class CheckoutComponent {
     }
 
     onSubmit() {
+      if (
+        this.shipData.name &&
+        this.shipData.surname &&
+        this.shipData.address &&
+        this.shipData.postcode.length === 5 &&
+        this.shipData.city &&
+        this.shipData.country
+      ) {
+        this.paymentService.setShipData(this.shipData);
+        this.router.navigate(['payment']);
+      }
+      
+    }
+
+    validatePostalCode(value: string) {
+      const postalCodePattern = /^\d{5}$/;
+      this.invalidPostalCode = !postalCodePattern.test(value);
+    }
+
+    goBack() {
+      this.router.navigate(['home']);
     }
 
     ngOnDestroy(): void {

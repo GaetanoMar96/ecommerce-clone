@@ -1,0 +1,54 @@
+.container {
+    min-height: 720px; 
+}
+
+.navigation {
+    font-size: 20px;
+    /* top right bottom left */
+    margin: 20px 0px 20px 20px;
+    .section-hover {
+      cursor: pointer; 
+    }
+    
+    .section-hover:hover {
+      cursor: pointer; 
+    }
+}
+
+.contact-info{
+    margin-bottom: 30px;
+    font-size: 16px;
+    .card {
+        margin-bottom: 20px;
+    }
+}
+
+.payment {
+    margin-bottom: 30px;
+    font-size: 16px;
+    .payment-methods {
+        display: flex;
+        flex-direction: column;
+    }
+    .payment-option {
+        padding: 12px 0; 
+    }
+}
+
+.mat-divider {
+    margin: 8px 0; /* Adjust margin between options */
+}
+
+.btn {
+    background-color: #3a3a3a;
+    color: #fff !important;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    width: 250px;
+    height: 60px;  
+}
+  
+.btn:hover {
+    background-color: #333;
+}

@@ -12,3 +12,4 @@ export * from './../pages/female-products/female-products.component';
 export * from './../pages/search-products/search-products.component';
 export * from './../pages/cart/cart.component';
 export * from './../pages/checkout/checkout.component';
+export * from './../pages/payment/payment.component';

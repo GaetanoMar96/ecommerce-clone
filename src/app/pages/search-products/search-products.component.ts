@@ -1,9 +1,12 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   DialogService,
-  SearchProductsService
+  SearchProductsService,
+  ProductsService
 } from './../../services/index';
+import { Product } from './../../models/index';
+
 
 @Component({
   selector: 'app-search-products',
@@ -11,18 +14,19 @@ import {
   styleUrls: ['./search-products.component.scss'],
 })
 export class SearchProductsComponent implements OnInit {
-  movies: any[] = [];
+  products: any[] = [];
   data: any[] = [];
 
   constructor(
-    private router: ActivatedRoute,
+    private router: Router,
     private dialogService: DialogService,
-    private searchProductsService: SearchProductsService
+    private searchProductsService: SearchProductsService,
+    private productsService: ProductsService
   ) {}
 
   ngOnInit(): void {
     this.data = this.searchProductsService.getSearchResults();
-    this.pushData()
+    this.pushData();
   }
 
   pushData() {
@@ -30,7 +34,7 @@ export class SearchProductsComponent implements OnInit {
     let row: any[] = []
     while (i < this.data.length) {
       if (i % 4 === 0) {
-        this.movies.push(row)
+        this.products.push(row)
         row = []
       } else {
         row.push(this.data[i])
@@ -39,10 +43,13 @@ export class SearchProductsComponent implements OnInit {
     }
 
     if (row.length > 0) {
-      this.movies.push(row)
+      this.products.push(row)
     }
-    console.log(this.movies)
   }
 
+  goToProduct(product: Product): void {
+    this.productsService.setProduct(product);
+    this.router.navigate(['product'], { state: { section: 'home' } })
+  }
   
 }
