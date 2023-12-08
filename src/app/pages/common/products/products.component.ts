@@ -54,16 +54,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private productsService: ProductsService) {
-      this.gender = this.header === 'MEN' ? 'male' : 'female';
   }
 
   ngOnInit() {   
+    this.checkGender();
     this.productSubscription = this.productsService.getProductsByGender(this.gender)
     .subscribe(
       {
-        next: (value) => {
-          this.products = value
-          console.log(value) },
+        next: (value) => this.products = value,
         error: (err) => console.log(err)
       }
     )
@@ -71,8 +69,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnChanges() {
     //triggered each time there is a change to input
-    this.gender = this.header === 'MEN' ? 'male' : 'female';
+    this.checkGender();
   } 
+
+  checkGender(): void {
+    this.gender = this.header === 'MEN' ? 'male' : 'female';
+  }
 
   goToProduct(product: Product): void {
     this.productsService.setProduct(product);
@@ -81,8 +83,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   getFilteredData(): void {
     //call service
-    console.log(this.checkBoxColor)
-    console.log('Price Range:', this.price.min, this.price.max);
     this.productFilters = {
       gender: this.gender,
       minPrice: this.price.min,

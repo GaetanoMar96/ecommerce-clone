@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
           },
           error: (error) => {
             //create form error
+            console.log(error);
             this.loading = false;
           },
         });

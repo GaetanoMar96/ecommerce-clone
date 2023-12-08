@@ -26,6 +26,7 @@ export class CartComponent implements OnInit, OnDestroy {
       next: (value: SelectedProduct[]) => 
         {
           this.products = value;
+          console.log(this.products)
           this.products.forEach(product => this.total = this.total + product.price);
         },
       error: (err) => console.log(err)
@@ -51,7 +52,6 @@ export class CartComponent implements OnInit, OnDestroy {
   goBack() {
     this.router.navigate(['home']);
   }
-  
 
   ngOnDestroy(): void {
     if (this.productSubscription) {

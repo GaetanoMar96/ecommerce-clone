@@ -60,7 +60,6 @@ export class RegisterComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response: AuthResponse) => {
-          console.log(response);
           // valid registration navigate to log in form
           this.router.navigate(['/login']);
         },

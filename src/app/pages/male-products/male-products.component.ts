@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './male-products.component.html'
 })
 export class MaleProductsComponent {
-  section = 'MEN SECTION'
+  section = 'MEN'
 }

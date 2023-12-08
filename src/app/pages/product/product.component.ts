@@ -49,7 +49,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       brand: this.product.brand,
       description: this.product.description,
       price: this.product.price,
-      image: this.product.images.find((image: any) => image.color === this.color).imageBin,
+      image: this.product.images.find((image: any) => image.color === this.color).image,
       color: this.color,
       size: this.size
     }
