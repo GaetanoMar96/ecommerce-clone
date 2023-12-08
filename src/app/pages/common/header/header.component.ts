@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from "@angular/core";
 import { AuthService, SearchProductsService } from './../../../services/index';
 import { Router } from '@angular/router';
+import { Subscription } from'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -12,6 +13,8 @@ export class HeaderComponent implements OnInit {
     //value: string = null;
     searchQuery: string = '';
     showSearchBar: boolean = false;
+
+    private productSubscription: Subscription = new Subscription();
 
     constructor(
         private router: Router,
@@ -29,16 +32,19 @@ export class HeaderComponent implements OnInit {
 
     search() {
         if (this.searchQuery != '') {
-            this.searchProductsService.setSearchResults(this.fakeSearch(this.searchQuery))
-            this.toggleSearchBar()
-            this.router.navigate(['/search-products']);
+          this.productSubscription = this.searchProductsService.getProductsBySearchQuery(this.searchQuery)
+              .subscribe(
+                {
+                  next: (value) => 
+                  {
+                    this.searchProductsService.setSearchResults(value)
+                    this.toggleSearchBar()
+                    this.router.navigate(['/search-products']);
+                  },
+                  error: (err) => console.log(err)
+                }
+              )            
         }
-        // You can perform any search logic here, e.g., make an API request to retrieve matching results
-        // For this example, we'll assume a fake array of shoe items
-        
-    
-        // Navigate to the search results component with the matching results
-        
       }
 
     fakeSearch(query: string): any[] {
@@ -82,5 +88,11 @@ export class HeaderComponent implements OnInit {
 
     logout() {
         this.authService.logout();
+    }
+
+    ngOnDestroy(): void {
+      if (this.productSubscription) {
+        this.productSubscription.unsubscribe();  
+      }
     }
 }

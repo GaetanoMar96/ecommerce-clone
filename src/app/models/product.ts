@@ -8,6 +8,7 @@ export interface Product {
 }
 
 export interface Image {
+    image?: string
     imageBin?: string;
     color?: string;
 }

@@ -19,6 +19,7 @@ import { RegisterComponent,
   ProductSummaryComponent,
   PaymentComponent
 } from './pages/index';
+import { AuthInterceptorService, ErrorInterceptorService } from './services/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -81,7 +82,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatRadioModule
   ],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { AuthService, ProductsService } from './../../../services/index';
-import { Product, CheckBoxColor, CheckBoxBrand, PriceRange } from './../../../models/index';
+import { Product, CheckBoxColor, CheckBoxBrand, PriceRange, ProductFilters } from './../../../models/index';
 import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { Subscription } from'rxjs';
 import { MatSlider } from '@angular/material/slider';
 
 
@@ -14,17 +14,25 @@ import { MatSlider } from '@angular/material/slider';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   
-  @Input() header: string = 'SECTION';
-  sliderValue = 50;
-
+  @Input() header: string = '';
+  
   products: Product[] = [];
 
+  productFilters: ProductFilters = {
+    gender: '',
+    minPrice: 0,
+    maxPrice: 200,
+    color: '', 
+    brand: ''
+  };
+
+  gender: string = '';
+  sliderValue = 50;
+  
   price: PriceRange = {
     min: 0,
     max: 200
   }
-
-  value = 500;
 
   checkBoxColor: CheckBoxColor = {
     red: false,
@@ -37,61 +45,36 @@ export class ProductsComponent implements OnInit, OnDestroy {
     blue: false
   };
 
-  checkBoxBrand: CheckBoxBrand = {
-    nike: false,
-    adidas: false,
-    converse: false
-  }
-
+  selectedBrand: string = '';
   selectedColors: string[] = [];
+
+  private productSubscription: Subscription = new Subscription();
 
   constructor( 
     private authService: AuthService,
     private router: Router,
     private productsService: ProductsService) {
-    
-    }
+      this.gender = this.header === 'MEN' ? 'male' : 'female';
+  }
 
   ngOnInit() {   
-    this.products = [{
-      name: 'run',
-      brand: 'nike',
-      description:
-        'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
-      price: 80.0,
-      images: [{imageBin: 'assets/adidas-run-black.png', color: "blue"}]
-    },
-    {
-      name: 'run',
-      brand: 'nike',
-      description:
-        'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
-      price: 80.0,
-      images: [{imageBin: 'assets/adidas-run-black.png', color: "blue"}]
-    },
-    {
-      name: 'run',
-      brand: 'nike',
-      description:
-        'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
-      price: 80.0,
-      images: [{imageBin: 'assets/adidas-run-black.png', color: "blue"}]
-    },{
-      name: 'run',
-      brand: 'nike',
-      description:
-        'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
-      price: 80.0,
-      images: [{imageBin: 'assets/adidas-run-black.png', color: "blue"}]
-    },] 
+    this.productSubscription = this.productsService.getProductsByGender(this.gender)
+    .subscribe(
+      {
+        next: (value) => {
+          this.products = value
+          console.log(value) },
+        error: (err) => console.log(err)
+      }
+    )
   }
 
   ngOnChanges() {
-    
+    //triggered each time there is a change to input
+    this.gender = this.header === 'MEN' ? 'male' : 'female';
   } 
 
   goToProduct(product: Product): void {
-    console.log(product)
     this.productsService.setProduct(product);
     this.router.navigate(['product'], { state: { section: this.header } })
   }
@@ -99,11 +82,31 @@ export class ProductsComponent implements OnInit, OnDestroy {
   getFilteredData(): void {
     //call service
     console.log(this.checkBoxColor)
-    console.log(this.checkBoxBrand)
     console.log('Price Range:', this.price.min, this.price.max);
+    this.productFilters = {
+      gender: this.gender,
+      minPrice: this.price.min,
+      maxPrice: this.price.max,
+      color: '', //to be changed
+      brand: this.selectedBrand
+    }
+
+    this.productSubscription = this.productsService.getProductsByFilters(this.productFilters)
+    .subscribe(
+      {
+        next: (value) => this.products = value,
+        error: (err) => console.log(err)
+      }
+    )
+  }
+
+  onBrandSelectionChange(brand: string) {
+    this.selectedBrand = brand;
   }
 
   ngOnDestroy(): void {
-    
+    if (this.productSubscription) {
+      this.productSubscription.unsubscribe();  
+    }
   }
 }

@@ -9,7 +9,7 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { RegisterRequest, Role } from '../../../models/index';
+import { RegisterRequest, Role, AuthResponse } from '../../../models/index';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -59,7 +59,8 @@ export class RegisterComponent implements OnInit {
       .register(request)
       .pipe(take(1))
       .subscribe({
-        next: () => {
+        next: (response: AuthResponse) => {
+          console.log(response);
           // valid registration navigate to log in form
           this.router.navigate(['/login']);
         },

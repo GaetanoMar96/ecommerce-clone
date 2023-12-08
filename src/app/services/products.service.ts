@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Product, SelectedProduct } from './../models/index';
+import { Product, SelectedProduct, ProductFilters } from './../models/index';
 import { BehaviorSubject, Observable } from'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from './../envs/env_local';
+import { ApiPaths } from './../helpers/api-paths';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +20,10 @@ export class ProductsService {
 
     private productSubj = new BehaviorSubject<Product>(this._product);
     private productsSubjList = new BehaviorSubject<SelectedProduct[]>([]);
+
+    constructor(
+        private http: HttpClient) {
+    }
 
     setProduct(product: Product) {
         this.productSubj.next(product);
@@ -40,6 +47,16 @@ export class ProductsService {
     removeProductsForCart(index: number): Observable<SelectedProduct[]> {
         this.productsSubjList.getValue().splice(index)
         return this.productsSubjList.asObservable();
+    }
+
+    //API
+
+    getProductsByGender(gender: string): Observable<Product[]> {
+        return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/` + gender);
+    }
+
+    getProductsByFilters(productFilters: ProductFilters): Observable<Product[]> {
+        return this.http.post<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/filters`, productFilters);
     }
 
 }
