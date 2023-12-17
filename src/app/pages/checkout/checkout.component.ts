@@ -27,6 +27,7 @@ export class CheckoutComponent {
 
     
     private productSubscription: Subscription = new Subscription();
+    private shipSubscription: Subscription = new Subscription();
 
     constructor(private router: Router,
         private productsService: ProductsService,
@@ -44,6 +45,13 @@ export class CheckoutComponent {
             },
           error: (err) => console.log(err)
         }) 
+        
+        this.shipSubscription = this.paymentService.getShipData()
+        .subscribe({
+          next: (value: ShipData) => this.shipData = value,
+          error: (err) => console.log(err)
+        }) 
+
       
     }
 
@@ -74,6 +82,9 @@ export class CheckoutComponent {
     ngOnDestroy(): void {
         if (this.productSubscription) {
           this.productSubscription.unsubscribe();  
+        }
+        if (this.shipSubscription) {
+          this.shipSubscription.unsubscribe();  
         }
     }
 }

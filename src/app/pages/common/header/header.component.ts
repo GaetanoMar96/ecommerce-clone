@@ -1,7 +1,8 @@
 import { Component, OnInit, OnChanges } from "@angular/core";
-import { AuthService, SearchProductsService } from './../../../services/index';
+import { AuthService, SearchProductsService, ProductsService, HeaderService } from './../../../services/index';
 import { Router } from '@angular/router';
 import { Subscription } from'rxjs';
+import { SelectedProduct } from './../../../models/index';
 
 @Component({
     selector: 'app-header',
@@ -10,7 +11,7 @@ import { Subscription } from'rxjs';
 export class HeaderComponent implements OnInit {
 
     hidden: boolean = false;
-    //value: string = null;
+    value: number = 0;
     searchQuery: string = '';
     showSearchBar: boolean = false;
 
@@ -19,10 +20,21 @@ export class HeaderComponent implements OnInit {
     constructor(
         private router: Router,
         private authService: AuthService,
+        private headerService: HeaderService,
+        private productsService: ProductsService,
         private searchProductsService: SearchProductsService) {}
     
     ngOnInit(): void {
-        
+      this.headerService.badgeCount$.subscribe(
+          {
+            next: (count) => 
+            {
+              this.value = count;
+              console.log(this.value);
+            },
+            error: (err) => console.log(err)
+          }
+        )
     }
 
     toggleSearchBar() {
@@ -37,6 +49,7 @@ export class HeaderComponent implements OnInit {
                 {
                   next: (value) => 
                   {
+                    console.log(value)
                     this.searchProductsService.setSearchResults(value)
                     this.toggleSearchBar()
                     this.router.navigate(['/search-products']);
@@ -45,37 +58,6 @@ export class HeaderComponent implements OnInit {
                 }
               )            
         }
-      }
-
-    fakeSearch(query: string): any[] {
-        //do backend call with query search
-        return [{
-            name: 'run',
-            description:
-              'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
-            price: 80.0,
-            image: 'assets/adidas-run-black.png',
-          },
-          {
-            name: 'run',
-            description:
-              'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
-            price: 80.0,
-            image: 'assets/adidas-run-black.png',
-          },
-          {
-            name: 'run',
-            description:
-              'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
-            price: 80.0,
-            image: 'assets/adidas-run-black.png',
-          },{
-            name: 'run',
-            description:
-              'A shoe made by adidas from the run collection. Crafted with the most expensive materials to give you all the assistance you need in your daily routine or during training.',
-            price: 80.0,
-            image: 'assets/adidas-run-black.png',
-          },] 
     }
 
     goToAccount() {

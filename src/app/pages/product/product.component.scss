@@ -68,4 +68,12 @@
       }
     }
   
-  
+.product-tile {
+  flex-basis: calc(33.33%  - 30px); /* Two columns with gutter */
+  img {
+    height: 200px;
+    width: 200px;
+    background-color: #e4e1e1;
+    margin-right: 40px;
+  }
+}

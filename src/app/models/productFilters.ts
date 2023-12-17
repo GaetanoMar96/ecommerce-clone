@@ -2,6 +2,6 @@ export interface ProductFilters {
     gender?: string;
     minPrice?: number;
     maxPrice?: number;
-    color?: string;
+    colors?: Array<string>;
     brand?: string;
 }

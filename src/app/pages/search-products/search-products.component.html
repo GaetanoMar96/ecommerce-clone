@@ -1,8 +1,14 @@
-<div class="container" *ngIf="products.length != 0">
-    <div class="row" *ngFor="let row of products">
+<div class="container">
+  <div *ngIf="products.length == 0" class="empty-state">
+    <p>There are no products available by your search.</p>
+    <button mat-button class="btn" routerLink="/home">Return to home</button>
+  </div>
+  <div *ngIf="products.length != 0">
+    <div  class="row" *ngFor="let row of products">
       <ng-container class="col" *ngFor="let product of row">
-        <img [src]="'assets/shoes_images/' + product.images[0].image" alt="{{ product.title }}"
-          class="rowimg largeposter" (click)="goToProduct(product)"/>
+        <img [src]="'assets/shoes_images/' + product.images[0].image" alt="{{ product.title }}" class="rowimg largeposter"
+          (click)="goToProduct(product)" />
       </ng-container>
     </div>
   </div>
+</div>

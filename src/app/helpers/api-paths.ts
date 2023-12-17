@@ -1,4 +1,5 @@
 export enum ApiPaths {
     Auth = 'auth',
-    Products = 'products'
+    Products = 'products',
+    Payment = 'payment'
  }

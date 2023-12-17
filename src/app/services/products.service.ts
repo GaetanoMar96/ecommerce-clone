@@ -45,8 +45,15 @@ export class ProductsService {
     }
 
     removeProductsForCart(index: number): Observable<SelectedProduct[]> {
-        this.productsSubjList.getValue().splice(index)
+        const products = this.productsSubjList.getValue();
+        products.splice(index, 1); 
+        this.productsSubjList.next(products); 
         return this.productsSubjList.asObservable();
+    }
+
+    removeAllProductsFromCart(): void {
+        this.productsSubjList.getValue().splice(0, this.productsSubjList.getValue().length);
+        this.productsSubjList.next([]);
     }
 
     //API

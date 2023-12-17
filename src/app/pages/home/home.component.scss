@@ -3,16 +3,20 @@
     margin-bottom: 50px;
   }
   
-  .website-card {
-    max-width: 1200px;
+.website-card {
+    max-width: 1800px;
     margin: 20px auto;
-  }
+}
   
   .website-image {
     width: 100%;
-    max-height: 600px;
+    max-height: 650px;
   }
   
+  .website-title {
+    font-size: 30px;
+  }
+
   .shopping-options {
     display: flex;
     justify-content: space-around;

@@ -26,6 +26,7 @@ export class SearchProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.data = this.searchProductsService.getSearchResults();
+    console.log(this.data)
     this.pushData();
   }
 

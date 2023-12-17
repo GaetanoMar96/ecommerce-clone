@@ -49,7 +49,7 @@ export class AuthService {
         localStorage.removeItem('user');
         this.userSubject.next(null);
         // redirect to login page
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/login']);
     }
 
     //utility method to check if token expired

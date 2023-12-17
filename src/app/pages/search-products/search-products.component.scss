@@ -1,6 +1,32 @@
+.container {
+  min-height: 720px; 
+}
+
+.empty-state {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+  font-size: 16px;
+}
+
+.btn {
+  background-color: #3a3a3a;
+  color: #fff !important;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  width: 250px;
+  height: 60px;  
+}
+
+.btn:hover {
+  background-color: #333;
+}
+
 .row {
     margin-top: 100px;
-  }
+}
   
   .rowimg {
       max-height: 100px;

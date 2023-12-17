@@ -5,3 +5,4 @@ export * from './product';
 export * from './filters';
 export * from './shipData';
 export * from './productFilters';
+export * from './paymentIntent';

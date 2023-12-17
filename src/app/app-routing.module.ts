@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'payment', component: PaymentComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({

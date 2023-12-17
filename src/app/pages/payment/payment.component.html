@@ -5,18 +5,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col" style="margin-top: 30px;">
-            
+        <div *ngIf="!success" class="col" style="margin-top: 30px;">
             <div class="contact-info">
                 <mat-card class="card">
                     <mat-card-content>Contact {{shipData.name}} {{shipData.surname}}</mat-card-content>
                 </mat-card>
-    
                 <mat-card class="card">
                     <mat-card-content>Ship to: {{shipData.address}}, {{shipData.city}}, {{shipData.country}}</mat-card-content>
                 </mat-card>
+                <button class="btn" mat-button (click)="goBack()">Change Information</button>
             </div>
-
             <mat-card class="payment">
                 <mat-card-header>
                     <mat-card-title>Choose Payment Method</mat-card-title>
@@ -26,20 +24,78 @@
                       <mat-radio-button value="credit_card" class="payment-option" (click)="showTestCardInfo()">
                         <mat-icon>credit_card</mat-icon> Credit Card
                       </mat-radio-button>
-                      <mat-card-content *ngIf="showTestCard">
+                      <mat-card-content *ngIf="selectedMethod === 'credit_card'">
                         <p>Test Card Number: 4242 4242 4242 4242</p>
-                        <p>CVV: Any 3 digits</p>
+                        <p>Test CVC: 222</p>
+                        <p>Test expiration date: 12/2024</p>
+                      <div class="row">
+                          <mat-form-field appearance="fill">
+                              <mat-label>Card Number</mat-label>
+                              <input matInput required [(ngModel)]="cardNumber" (ngModelChange)="formatCardNumber()" placeholder="4242 4242 4242 4242">
+                          </mat-form-field>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <mat-form-field appearance="fill">
+                            <mat-label>CVC</mat-label>
+                            <input matInput required [(ngModel)]="cvc" placeholder="222">
+                        </mat-form-field>
+                        </div>
+                        <div class="col">
+                          <mat-form-field appearance="fill">
+                            <mat-label>Expiration Date</mat-label>
+                            <input matInput required [(ngModel)]="expDate" (ngModelChange)="formatExpDate()" placeholder="MM/YYYY">
+                        </mat-form-field>
+                        </div>
+                    </div>
                     </mat-card-content>
                       <mat-divider></mat-divider>
                       <mat-radio-button value="cash" class="payment-option">
                         <mat-icon>account_balance_wallet</mat-icon>Cash on delivery
                       </mat-radio-button>
-                      <!-- Add more payment method options here -->
                     </mat-radio-group>
                   </mat-card-content>
             </mat-card>
-
             <button class="btn" color="primary" type="submit" (click)="onSubmit()">Confirm</button>
+        </div>
+
+        <div *ngIf="success" class="col" style="margin-top: 30px;">
+            <p class="order-title">Thank you for your order!</p>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col">
+                    <mat-card class="card">
+                        <mat-card-header>
+                          <mat-card-title>Contact Information</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                          <p>Name: {{ shipData.name }} {{ shipData.surname }}</p>
+                        </mat-card-content>
+                      </mat-card>
+                </div>
+                <div class="col">
+                    <mat-card class="card">
+                        <mat-card-header>
+                          <mat-card-title>Shipping Information</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                          <p>Address: {{ shipData.address }}, {{ shipData.city }}, {{ shipData.country }}</p>
+                        </mat-card-content>
+                      </mat-card>
+                </div>   
+            </div>
+            <div class="row" style="margin-top: 30px;">
+              <div class="col">
+                <mat-card class="card">
+                  <mat-card-header>
+                    <mat-card-title>Payment Method</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p>Selected Method: {{ selectedMethod }}</p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+            <button class="btn" color="primary" type="submit" (click)="goHome()">Continue shopping</button>
         </div>
         <div class="col">
             <app-product-summary [products]="products" [total]="total"></app-product-summary>

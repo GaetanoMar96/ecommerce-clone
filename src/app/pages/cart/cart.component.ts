@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DialogService, ProductsService } from './../../services/index';
+import { HeaderService, ProductsService } from './../../services/index';
 import { Subscription } from'rxjs';
 import { Product, SelectedProduct } from './../../models/index';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private productsService: ProductsService,
-    private dialogService: DialogService
+    private headerService: HeaderService
   ) {}
 
   ngOnInit() {
@@ -26,7 +26,6 @@ export class CartComponent implements OnInit, OnDestroy {
       next: (value: SelectedProduct[]) => 
         {
           this.products = value;
-          console.log(this.products)
           this.products.forEach(product => this.total = this.total + product.price);
         },
       error: (err) => console.log(err)
@@ -38,12 +37,15 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   removeProduct(index: number) {
+    const price = this.products[index].price;
     this.productSubscription = this.productsService.removeProductsForCart(index)
     .subscribe({
       next: (value: SelectedProduct[]) => 
       {
         this.products = value,
+        this.total = 0;
         this.products.forEach(product => this.total = this.total + product.price);
+        this.headerService.updateBadgeCount(this.products.length);
       },
       error: (err) => console.log(err)
     }) 

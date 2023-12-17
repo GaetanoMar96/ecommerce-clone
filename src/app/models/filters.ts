@@ -3,16 +3,9 @@ export interface PriceRange {
     max?: number;
 }
 
-export interface CheckBoxColor { 
-    red?: boolean;
-    white?: boolean;
-    black?: boolean;
-    green?: boolean;
-    brown?: boolean;
-    pink?: boolean;
-    purple?: boolean;
-    blue?: boolean;
-}
+export type CheckBoxColor = {
+    [key: string]: boolean;
+};
 
 export interface CheckBoxBrand { 
     nike?: boolean;

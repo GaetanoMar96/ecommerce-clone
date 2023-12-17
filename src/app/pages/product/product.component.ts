@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DialogService, ProductsService } from './../../services/index';
+import { DialogService, ProductsService, HeaderService } from './../../services/index';
 import { Subscription } from'rxjs';
-import { SelectedProduct } from './../../models/index';
+import { take } from'rxjs/operators';
+import { SelectedProduct, Product } from './../../models/index';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +22,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private productsService: ProductsService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private headerService: HeaderService
   ) {}
 
   ngOnInit() {
@@ -40,7 +42,11 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   selectedColor(color: string) {
-    this.color = color;
+    if (this.color === color) {
+      this.color = ''; 
+    } else {
+      this.color = color; 
+    }
   }
 
   addToCart() {
@@ -53,6 +59,13 @@ export class ProductComponent implements OnInit, OnDestroy {
       color: this.color,
       size: this.size
     }
+
+    this.headerService.badgeCount$.pipe(take(1)).subscribe(
+      {
+        next: (value: number) => this.headerService.updateBadgeCount(value + 1),
+        error: (err) => console.log(err)
+      }
+    );
 
     this.dialogService.openViewCartDialog(selectedProduct);
     this.productsService.setProductsForCart(selectedProduct);

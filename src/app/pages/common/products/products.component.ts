@@ -22,7 +22,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     gender: '',
     minPrice: 0,
     maxPrice: 200,
-    color: '', 
+    colors: [], 
     brand: ''
   };
 
@@ -83,11 +83,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   getFilteredData(): void {
     //call service
+    let colors = Object.keys(this.checkBoxColor).filter(key => this.checkBoxColor[key])
+    
     this.productFilters = {
       gender: this.gender,
       minPrice: this.price.min,
       maxPrice: this.price.max,
-      color: '', //to be changed
+      colors: colors, 
       brand: this.selectedBrand
     }
 

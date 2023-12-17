@@ -5,3 +5,4 @@ export * from './products.service';
 export * from './payment.service';
 export * from './auth-interceptor.service';
 export * from './error-interceptor.service';
+export * from './header.service';
