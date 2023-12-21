@@ -15,7 +15,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() { 
-    if (this.authService.user == undefined) {
+    console.log(this.authService.user)
+    if (this.authService.userValue == undefined) {
       this.router.navigate(['login']);
     }
   }
