@@ -1,44 +1,43 @@
-.header-row {
-    height: 100px;
-    background-color: #3498db;
-    .header {
-        margin-top: 30px;
-        margin-left: 30px;
-        font-size: 45px;
-        color: white;
-    }
-}
-
-.container-fluid {
+/////////// SELECTION ////////////
+.categories-container {
+    background-color: #f5f5f5;
     padding: 20px;
-}
-
-////////// FILTERS ////////////
-
-.filter-panel {
-    padding: 16px;
-    //background-color: #f5f5f5;
-    font-size: 20px;
-    
-    .checkbox-color {
-        margin-top: 10px;
-        font-size: 20px !important;
-        margin-bottom: 10px;
-        .single-checkbox{
-            font-size: 20px !important;
-        }
-    }
-
-    .filter-btn {
-        margin-top: 20px;
-    }
-}
-  
-  .filter-option {
-    width: 100%;
-    margin-bottom: 16px;
+    border-radius: 8px;
+    width: 300px; /* Adjust the width as needed */
+    margin-top: 30px;
   }
-
+  
+  h2 {
+    margin-bottom: 10px;
+  }
+  
+  .category-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .category-btn {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ddd;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .category-btn:hover {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
 /////////// PRODUCTS ////////////
 .featured-products {
     width: 1000px;

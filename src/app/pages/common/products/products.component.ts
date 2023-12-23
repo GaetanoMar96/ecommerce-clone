@@ -84,7 +84,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   getFilteredData(): void {
     //call service
     let colors = Object.keys(this.checkBoxColor).filter(key => this.checkBoxColor[key])
-    
+    console.log(colors)
     this.productFilters = {
       gender: this.gender,
       minPrice: this.price.min,

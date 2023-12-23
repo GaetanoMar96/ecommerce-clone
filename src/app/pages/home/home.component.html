@@ -1,34 +1,28 @@
 <div class="home">
   <div class="website-card">
     <img src="assets/shoes-background.jpg" alt="Website Image" class="website-image">
-      <h2 class="overlay-text">Find your favourite pairs of shoes!"</h2>
-    </div>
-  
-    
-    <div class="shopping-options">
-        <mat-card class="shopping-card" (click)="navigateToMaleShopping()">
-          <img src="assets/men-shoes.jpg" alt="Male Clothes" class="shopping-image">
-          <p class="shopping-description">Constructed from luxury nylons, leathers, and custom hardware, featuring sport details such as hidden breathing vents, waterproof + antimicrobial linings, and more.</p>
-          <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-              <button mat-button class="btn">Shop for Men</button>
-            </div>
-            <div class="col-4"></div>
+      <h2 class="overlay-text">Find your favourite pairs of shoes!</h2>
+      <button mat-button class="btn" (click)="navigateToCategory()">Shop</button>
+  </div>
+  <div class="featured-title">Featured Products</div>
+    <div *ngIf="featuredProducts.length === 6" class="featured-products">
+      <div class="product-grid">
+          <div *ngFor="let product of featuredProducts" class="product-tile">
+            <mat-card class="product-content">
+              <!-- Image -->
+              <img class="product-poster" [src]="'assets/shoes_images/' + product.images[0].image" alt="Brand Image">
+            
+              <mat-card-content>
+                <!-- Title -->
+                <h2 mat-card-title class="product-title">{{product.name}}</h2>
+                <!-- Description -->
+                <p mat-card-subtitle class="product-description">{{product.description}}</p>
+                <!-- Cost -->
+                <p class="product-price">${{product.price}}</p>
+              </mat-card-content>
+            </mat-card>
           </div>
-        </mat-card>
-    
-        <mat-card class="shopping-card" (click)="navigateToFemaleShopping()">
-          <img src="assets/women-shoes.jpg" alt="Female Clothes" class="shopping-image">
-          <p class="shopping-description">Constructed from luxury nylons, leathers, and custom hardware, featuring sport details such as hidden breathing vents, waterproof + antimicrobial linings, and more.</p>
-          <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-              <button mat-button class="btn">Shop for Women</button>
-            </div>
-            <div class="col-4"></div>
-          </div>
-        </mat-card>
+        </div>
       </div>
 </div>
   

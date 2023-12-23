@@ -17,7 +17,8 @@ import { RegisterComponent,
   CartComponent,
   CheckoutComponent,
   ProductSummaryComponent,
-  PaymentComponent
+  PaymentComponent,
+  CategoryComponent
 } from './pages/index';
 import { AuthInterceptorService, ErrorInterceptorService } from './services/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,7 +57,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     CartComponent,
     CheckoutComponent,
     ProductSummaryComponent,
-    PaymentComponent
+    PaymentComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

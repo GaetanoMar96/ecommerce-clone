@@ -1,10 +1,12 @@
 
 <div class="container-fluid">
   <div class="row header-row">
+    <div class="col-12">
     <p class="header">{{header}} SECTION</p>
-</div>
+  </div>
+  </div>
 <div class="row">
-    <div class="col-4 filter-panel">
+    <div class="col-lg-4 col-md-6 filter-panel">
         <mat-card>
             <mat-card-content>
             
@@ -58,13 +60,13 @@
               <mat-label>Brand</mat-label>
               <mat-radio-group [(ngModel)]="selectedBrand">
                 <div>
-                  <mat-radio-button color=primary value="nike" (change)="onBrandSelectionChange('nike')">Nike</mat-radio-button>
+                  <mat-radio-button color=primary value="Nike" (change)="onBrandSelectionChange('Nike')">Nike</mat-radio-button>
                 </div>
                 <div>
-                  <mat-radio-button color=primary value="adidas" (change)="onBrandSelectionChange('adidas')">Adidas</mat-radio-button>
+                  <mat-radio-button color=primary value="Adidas" (change)="onBrandSelectionChange('Adidas')">Adidas</mat-radio-button>
                 </div>
                 <div>
-                  <mat-radio-button color=primary value="converse" (change)="onBrandSelectionChange('converse')">Converse</mat-radio-button>
+                  <mat-radio-button color=primary value="Converse" (change)="onBrandSelectionChange('Converse')">Converse</mat-radio-button>
                 </div>
               </mat-radio-group>
               
@@ -76,24 +78,26 @@
             </mat-card-content>
           </mat-card>
     </div>
-    <div class="col-8">
-        <div *ngIf="products.length > 0" class="container-fluid">
-            <div class="product-grid">
-                <div *ngFor="let product of products; let i = index" class="product-tile">
-                    <div class="product-card" (click)="goToProduct(product)">
-                        <div class="product-header">
-                            <h2 class="product-title">{{product.name}}</h2>
-                        </div>
-                        <div class="product-content">
-                            <img class="product-poster" [src]="'assets/shoes_images/' + product.images[0].image" alt="Brand Image">
-                            <p class="product-description">
-                                {{product.description}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+    <div class="col-lg-8 col-md-6">
+        <div *ngIf="products.length != 0" class="featured-products">
+          <div class="product-grid">
+              <div *ngFor="let product of products" class="product-tile">
+                <mat-card class="product-content" (click)="goToProduct(product)">
+                  <!-- Image -->
+                  <img class="product-poster" [src]="'assets/shoes_images/' + product.images[0].image" alt="Brand Image">
+                
+                  <mat-card-content>
+                    <!-- Title -->
+                    <h2 mat-card-title class="product-title">{{product.name}}</h2>
+                    <!-- Description -->
+                    <p mat-card-subtitle class="product-description">{{product.description}}</p>
+                    <!-- Price -->
+                    <p class="product-price">${{product.price}}</p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
             </div>
-        </div>
+          </div>
     </div>
 </div>
 </div>

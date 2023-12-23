@@ -58,6 +58,10 @@ export class ProductsService {
 
     //API
 
+    getAllProducts(): Observable<Product[]> {
+        return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}`);
+    }
+
     getProductsByGender(gender: string): Observable<Product[]> {
         return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/` + gender);
     }
