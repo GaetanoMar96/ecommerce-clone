@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from './../envs/env_local';
 import { ApiPaths } from './../helpers/api-paths';
 import { RegisterRequest, AuthRequest, AuthResponse } from "./../models/index";
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,7 +15,8 @@ export class AuthService {
 
     constructor(
         private router: Router,
-        private http: HttpClient) {
+        private http: HttpClient,
+        private afAuth: AngularFireAuth) {
         this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
         this.user = this.userSubject.asObservable();
     }
@@ -23,6 +25,44 @@ export class AuthService {
         return this.userSubject.value;
     }
 
+    /*Adding firebase authentication*/
+    async register(request: RegisterRequest): Promise<void> {
+        try {
+            console.log(request)
+            const userCredential = await this.afAuth.createUserWithEmailAndPassword(request.email, request.password);
+            // Handle successful registration
+            const user = userCredential.user;
+            const userData: AuthResponse = { userId: user?.uid };
+            this.userSubject.next(userData);
+        } catch (error) {
+            throw error; // Handle registration failure
+        }
+    }
+
+    async login(request: AuthRequest): Promise<void> {
+        try {
+            const userCredential = await this.afAuth.signInWithEmailAndPassword(request.email, request.password);
+            // Handle successful login
+            const user = userCredential.user;
+            const userData: AuthResponse = { userId: user?.uid };
+            this.userSubject.next(userData);
+        } catch (error) {
+            throw error; // Handle login failure
+        }
+    }
+
+    async logout(): Promise<void> {
+        try {
+            await this.afAuth.signOut();
+            this.userSubject.next(null);
+            // Redirect to login page
+            this.router.navigate(['/login']);
+        } catch (error) {
+            throw error; 
+        }
+    }
+
+    /*
     register(request: RegisterRequest): Observable<AuthResponse> {
         return this.http.post(`${environment.apiUrl}/${ApiPaths.Auth}/register`, request);
     }
@@ -50,7 +90,7 @@ export class AuthService {
         this.userSubject.next(null);
         // redirect to login page
         this.router.navigate(['/login']);
-    }
+    }*/
 
     //utility method to check if token expired
     tokenExpired(token: string): boolean {

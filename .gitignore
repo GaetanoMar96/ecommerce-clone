@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+ecommerce-44c4e-firebase-adminsdk.json
+/src/app/envs/env_firebase.ts

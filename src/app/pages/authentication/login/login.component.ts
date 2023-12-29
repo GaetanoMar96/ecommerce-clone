@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
 
     if (this.form.valid) {
@@ -49,7 +49,16 @@ export class LoginComponent implements OnInit {
         email: this.f.email.value,
         password: this.f.password.value,
       };
-
+      
+      try {
+        await this.authService.login(request);
+        this.router.navigate(['/home']);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+      /*
       this.authService
         .login(request)
         .pipe(take(1))
@@ -62,7 +71,7 @@ export class LoginComponent implements OnInit {
             console.log(error);
             this.loading = false;
           },
-        });
+        });*/
     }
   }
 

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AppComponent } from './app.component';
 import { RegisterComponent, 
   LoginComponent, 
@@ -38,7 +40,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { firebaseConfig } from './envs/env_firebase';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,10 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSliderModule,
     MatCheckboxModule,
     MatButtonToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    AngularFireModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(firebaseConfig),
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},

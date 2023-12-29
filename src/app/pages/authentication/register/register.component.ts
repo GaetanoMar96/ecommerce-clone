@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
@@ -55,7 +55,15 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
 
     const request: RegisterRequest = this.getRequest();
-    this.authService
+    try {
+      await this.authService.register(request);
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.loading = false;
+    }
+    /*this.authService
       .register(request)
       .pipe(take(1))
       .subscribe({
@@ -67,7 +75,7 @@ export class RegisterComponent implements OnInit {
           console.log(error);
           this.loading = false;
         },
-      });
+      });*/
   }
 
   private getRequest(): RegisterRequest {
