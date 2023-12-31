@@ -19,6 +19,20 @@ export class AuthService {
         private afAuth: AngularFireAuth) {
         this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
         this.user = this.userSubject.asObservable();
+
+        // Subscribe to Firebase Auth state changes
+        this.afAuth.authState.subscribe((user) => {
+            if (user) {
+            user.getIdToken().then((token) => {
+                const userData: AuthResponse = { userId: user.uid, accessToken: token };
+                this.userSubject.next(userData);
+                localStorage.setItem('user', JSON.stringify(userData));
+            });
+            } else {
+                this.userSubject.next(null);
+                localStorage.removeItem('user');
+            }
+        });
     }
 
     public get userValue() {
@@ -28,12 +42,10 @@ export class AuthService {
     /*Adding firebase authentication*/
     async register(request: RegisterRequest): Promise<void> {
         try {
-            console.log(request)
-            const userCredential = await this.afAuth.createUserWithEmailAndPassword(request.email, request.password);
-            // Handle successful registration
-            const user = userCredential.user;
-            const userData: AuthResponse = { userId: user?.uid };
-            this.userSubject.next(userData);
+            await this.afAuth.createUserWithEmailAndPassword(
+                request.email, 
+                request.password
+            );            
         } catch (error) {
             throw error; // Handle registration failure
         }
@@ -41,11 +53,10 @@ export class AuthService {
 
     async login(request: AuthRequest): Promise<void> {
         try {
-            const userCredential = await this.afAuth.signInWithEmailAndPassword(request.email, request.password);
-            // Handle successful login
-            const user = userCredential.user;
-            const userData: AuthResponse = { userId: user?.uid };
-            this.userSubject.next(userData);
+            await this.afAuth.signInWithEmailAndPassword(
+                request.email, 
+                request.password
+            );
         } catch (error) {
             throw error; // Handle login failure
         }
@@ -54,7 +65,6 @@ export class AuthService {
     async logout(): Promise<void> {
         try {
             await this.afAuth.signOut();
-            this.userSubject.next(null);
             // Redirect to login page
             this.router.navigate(['/login']);
         } catch (error) {

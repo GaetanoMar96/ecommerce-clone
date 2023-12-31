@@ -19,11 +19,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() { 
-    console.log(this.authService.user)
     if (this.authService.userValue == undefined) {
       this.router.navigate(['login']);
     } else {
       //get all products
+      
       this.productsService.getAllProducts()
       .subscribe(
         {

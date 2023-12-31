@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges } from "@angular/core";
 import { AuthService, SearchProductsService, ProductsService, HeaderService } from './../../../services/index';
 import { Router } from '@angular/router';
 import { Subscription } from'rxjs';
-import { SelectedProduct } from './../../../models/index';
+import { Product } from './../../../models/index';
 
 @Component({
     selector: 'app-header',
@@ -47,14 +47,14 @@ export class HeaderComponent implements OnInit {
           this.productSubscription = this.searchProductsService.getProductsBySearchQuery(this.searchQuery)
               .subscribe(
                 {
-                  next: (value) => 
+                  next: (value: Product[]) => 
                   {
                     console.log(value)
                     this.searchProductsService.setSearchResults(value)
                     this.toggleSearchBar()
                     this.router.navigate(['/search-products']);
                   },
-                  error: (err) => console.log(err)
+                  error: (err: any) => console.log(err)
                 }
               )            
         }

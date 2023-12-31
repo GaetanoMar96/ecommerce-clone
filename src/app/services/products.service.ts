@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Product, SelectedProduct, ProductFilters } from './../models/index';
 import { BehaviorSubject, Observable } from'rxjs';
+import { tap, map } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../envs/env_local';
 import { ApiPaths } from './../helpers/api-paths';
+import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -14,17 +16,24 @@ export class ProductsService {
         brand: '',
         description: '',
         price: 0,
-        gender: 0,
+        gender: '',
         images: []
     };
 
     private productSubj = new BehaviorSubject<Product>(this._product);
     private productsSubjList = new BehaviorSubject<SelectedProduct[]>([]);
 
+    private productsCollection: AngularFirestoreCollection<Product>;
+    private cachedProducts$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
+
     constructor(
-        private http: HttpClient) {
+        private http: HttpClient,
+        private angularFirestore: AngularFirestore) {
+            this.productsCollection = angularFirestore.collection<Product>('products');
+            this.loadProducts();
     }
 
+    //GETTERS and SETTERS
     setProduct(product: Product) {
         this.productSubj.next(product);
     }
@@ -56,8 +65,58 @@ export class ProductsService {
         this.productsSubjList.next([]);
     }
 
-    //API
+    //CACHING
+    getAllProducts(): Observable<Product[]> {
+        return this.cachedProducts$.asObservable();
+    }
+    
+    private loadProducts(): void {
+        this.productsCollection.valueChanges().pipe(
+          tap((products: Product[]) => {
+            this.cachedProducts$.next(products);
+          })
+        ).subscribe();
+    }
 
+    //API FIREBASE 
+    getProductsByGender(gender: string): Observable<Product[]> {
+        return this.cachedProducts$.pipe(
+            map(products => products.filter(product => product.gender === gender))
+        );
+    }
+
+    getProductsByFilters(productFilters: ProductFilters): Observable<Product[]> {
+        return this.cachedProducts$.pipe(
+            map(products => this.filterProducts(products, productFilters))
+        );
+    }
+
+    private filterProducts(products: Product[], filters: ProductFilters): Product[] {
+        return products.filter(product => {
+          let valid = true;
+    
+          if (filters.gender && product.gender !== filters.gender) {
+            valid = false;
+          }
+          if (filters.minPrice && product.price && product.price < filters.minPrice) {
+            valid = false;
+          }
+          if (filters.maxPrice && product.price && product.price > filters.maxPrice) {
+            valid = false;
+          }
+          if (filters.colors && filters.colors.length > 0 && product.images) {
+            const productColors = product.images.map(image => image.color);
+            const intersect = productColors.filter(color => filters.colors.includes(color));
+            if (intersect.length === 0) {
+              valid = false;
+            }
+          }    
+          return valid;
+        });
+    }
+
+    //API
+    /*
     getAllProducts(): Observable<Product[]> {
         return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}`);
     }
@@ -68,6 +127,5 @@ export class ProductsService {
 
     getProductsByFilters(productFilters: ProductFilters): Observable<Product[]> {
         return this.http.post<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/filters`, productFilters);
-    }
-
+    }*/
 }
