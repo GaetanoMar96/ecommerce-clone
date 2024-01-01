@@ -3,10 +3,8 @@ import { Router } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
-  FormControl,
   Validators,
 } from '@angular/forms';
-import { take } from 'rxjs/operators';
 import { AuthRequest } from '../../../models/index';
 import { AuthService } from '../../../services/auth.service';
 
@@ -58,21 +56,17 @@ export class LoginComponent implements OnInit {
       } finally {
         this.loading = false;
       }
-      /*
-      this.authService
-        .login(request)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.router.navigateByUrl('home');
-          },
-          error: (error) => {
-            //create form error
-            console.log(error);
-            this.loading = false;
-          },
-        });*/
     }
+  }
+
+  onGoogleLogin() {
+    this.authService.loginWithGoogle()
+    .then(() => {
+      this.router.navigate(['/home']);
+    })
+    .catch((error) => {
+      console.error('Login with Google failed:', error);
+    });
   }
 
   goToRegister() {

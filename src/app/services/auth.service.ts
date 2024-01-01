@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from './../envs/env_local';
-import { ApiPaths } from './../helpers/api-paths';
 import { RegisterRequest, AuthRequest, AuthResponse } from "./../models/index";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { GoogleAuthProvider } from "firebase/auth";
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -62,6 +61,15 @@ export class AuthService {
         }
     }
 
+    async loginWithGoogle(): Promise<void> {
+        try {
+          const provider = new GoogleAuthProvider();
+          await this.afAuth.signInWithRedirect(provider);
+        } catch (error) {
+          throw error; // Handle login failure
+        }
+    }
+
     async logout(): Promise<void> {
         try {
             await this.afAuth.signOut();
@@ -71,36 +79,6 @@ export class AuthService {
             throw error; 
         }
     }
-
-    /*
-    register(request: RegisterRequest): Observable<AuthResponse> {
-        return this.http.post(`${environment.apiUrl}/${ApiPaths.Auth}/register`, request);
-    }
-
-    login(request: AuthRequest): Observable<AuthResponse> {
-        return this.http.post<AuthResponse>(
-            `${environment.apiUrl}/${ApiPaths.Auth}/login`, 
-            request)
-            .pipe(map(response => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                console.log(response)
-                localStorage.setItem('user', JSON.stringify(response));
-                this.userSubject.next(response);
-                return response;
-            }));
-    }
-
-    logout(): void {
-        // remove user from session context
-        this.http.post<any>(
-            `${environment.apiUrl}/${ApiPaths.Auth}/logout`, "")
-
-        // remove user from local storage and set current user to null
-        localStorage.removeItem('user');
-        this.userSubject.next(null);
-        // redirect to login page
-        this.router.navigate(['/login']);
-    }*/
 
     //utility method to check if token expired
     tokenExpired(token: string): boolean {

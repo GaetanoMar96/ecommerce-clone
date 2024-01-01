@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit {
             next: (count) => 
             {
               this.value = count;
-              console.log(this.value);
             },
             error: (err) => console.log(err)
           }
@@ -49,7 +48,6 @@ export class HeaderComponent implements OnInit {
                 {
                   next: (value: Product[]) => 
                   {
-                    console.log(value)
                     this.searchProductsService.setSearchResults(value)
                     this.toggleSearchBar()
                     this.router.navigate(['/search-products']);

@@ -67,6 +67,14 @@ export class ProductsService {
 
     //CACHING
     getAllProducts(): Observable<Product[]> {
+      if (this.cachedProducts$.getValue().length == 0) {
+        return this.productsCollection.valueChanges()
+        .pipe(
+          tap((products: Product[]) => {
+            this.cachedProducts$.next(products);
+          })
+          )  
+      } else 
         return this.cachedProducts$.asObservable();
     }
     
@@ -98,6 +106,9 @@ export class ProductsService {
           if (filters.gender && product.gender !== filters.gender) {
             valid = false;
           }
+          if (filters.brand && product.brand !== filters.brand) {
+            valid = false;
+          }
           if (filters.minPrice && product.price && product.price < filters.minPrice) {
             valid = false;
           }
@@ -114,18 +125,4 @@ export class ProductsService {
           return valid;
         });
     }
-
-    //API
-    /*
-    getAllProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}`);
-    }
-
-    getProductsByGender(gender: string): Observable<Product[]> {
-        return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/` + gender);
-    }
-
-    getProductsByFilters(productFilters: ProductFilters): Observable<Product[]> {
-        return this.http.post<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/filters`, productFilters);
-    }*/
 }

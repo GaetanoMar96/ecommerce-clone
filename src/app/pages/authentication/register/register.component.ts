@@ -8,8 +8,7 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { take } from 'rxjs/operators';
-import { RegisterRequest, Role, AuthResponse } from '../../../models/index';
+import { RegisterRequest, Role } from '../../../models/index';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -63,19 +62,6 @@ export class RegisterComponent implements OnInit {
     } finally {
       this.loading = false;
     }
-    /*this.authService
-      .register(request)
-      .pipe(take(1))
-      .subscribe({
-        next: (response: AuthResponse) => {
-          // valid registration navigate to log in form
-          this.router.navigate(['/login']);
-        },
-        error: (error) => {
-          console.log(error);
-          this.loading = false;
-        },
-      });*/
   }
 
   private getRequest(): RegisterRequest {

@@ -36,7 +36,7 @@ export class PaymentService {
 
     postProcessPayment(paymentIntent: PaymentIntent): Observable<any> {
         const headers = new HttpHeaders({
-          Authorization: 'Bearer ' + stripeKey.stripeApiKey,
+          Authorization: 'Bearer ' + stripeKey,
           'Content-Type': 'application/x-www-form-urlencoded',
         });
     
@@ -47,10 +47,5 @@ export class PaymentService {
     
         return this.http.post<any>(`https://api.stripe.com/v1/payment_intents`, body.toString(), { headers });
     }
-
-    /*
-    postProcessPayment(paymentIntent: PaymentIntent): Observable<any> {
-        return this.http.post<any>(`${environment.apiUrl}/${ApiPaths.Payment}/process`, paymentIntent);
-    }*/
 
 }

@@ -47,8 +47,4 @@ export class SearchProductsService {
     );
   }
 
-  /*
-  getProductsBySearchQuery(query: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/search/` + query);
-  }*/
 }

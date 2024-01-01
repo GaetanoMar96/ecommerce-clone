@@ -41,6 +41,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Firebase
 ecommerce-44c4e-firebase-adminsdk.json
 /src/app/envs/env_firebase.ts
 ecommerce_products.json
+*.log
+/.firebase
