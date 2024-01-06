@@ -4,7 +4,7 @@
       <h2 class="overlay-text">Find your favourite pairs of shoes!</h2>
       <button mat-button class="btn" (click)="navigateToCategory()">Shop</button>
   </div>
-  <div class="featured-title">Featured Products</div>
+  <div *ngIf="featuredProducts.length != 0" class="featured-title">Featured Products</div>
     <div *ngIf="featuredProducts.length === 6" class="featured-products">
       <div class="product-grid">
           <div *ngFor="let product of featuredProducts" class="product-tile">

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { AuthService, ProductsService } from './../../../services/index';
+import { AuthService, ProductsService, FavouriteProductsService } from './../../../services/index';
 import { Product, CheckBoxColor, CheckBoxBrand, PriceRange, ProductFilters } from './../../../models/index';
 import { Router } from '@angular/router';
 import { Subscription } from'rxjs';
@@ -53,7 +53,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor( 
     private authService: AuthService,
     private router: Router,
-    private productsService: ProductsService) {
+    private productsService: ProductsService,
+    private favouriteProductsService: FavouriteProductsService) {
   }
 
   ngOnInit() {   
@@ -104,6 +105,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   onBrandSelectionChange(brand: string) {
     this.selectedBrand = brand;
+  }
+
+  addToFavorites(event: Event, product: Product): void {
+    event.stopPropagation();
+    this.favouriteProductsService.setFavouriteProducts(product);
   }
 
   ngOnDestroy(): void {

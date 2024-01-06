@@ -20,7 +20,8 @@ import { RegisterComponent,
   CheckoutComponent,
   ProductSummaryComponent,
   PaymentComponent,
-  CategoryComponent
+  CategoryComponent,
+  FavouriteProductsComponent
 } from './pages/index';
 import { AuthInterceptorService, ErrorInterceptorService } from './services/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -60,7 +61,8 @@ import { firebaseConfig } from './envs/env_firebase';
     CheckoutComponent,
     ProductSummaryComponent,
     PaymentComponent,
-    CategoryComponent
+    CategoryComponent,
+    FavouriteProductsComponent
   ],
   imports: [
     BrowserModule,

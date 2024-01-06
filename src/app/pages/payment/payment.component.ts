@@ -96,7 +96,6 @@ export class PaymentComponent {
           this.paymentService.postProcessPayment(request).subscribe(
             {
               next: (value: any) => {
-                console.log(value)
                 this.success = true
               },
               error: (err) => console.log(err)

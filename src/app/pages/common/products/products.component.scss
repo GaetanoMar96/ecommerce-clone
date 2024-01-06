@@ -64,7 +64,19 @@
   .product-content {
     text-align: center;
     border-radius: 20px;
-  
+    
+    .favorite-icon-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      z-index: 1; /* Ensure the icon is above other content */
+    }
+    
+    .favorite-icon {
+      font-size: 24px;
+      color: black; 
+    }
+
     .product-poster {
       max-width: 100%;
       height: auto;
@@ -92,3 +104,4 @@
       font-family: 'Poppins', sans-serif;
     }
   }
+

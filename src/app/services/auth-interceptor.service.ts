@@ -17,6 +17,12 @@ export class AuthInterceptorService implements HttpInterceptor {
                 return next.handle(request);
               }
               
+              const isStripeRequest = request.url.startsWith('https://api.stripe.com/');
+
+              if (isStripeRequest) {
+                return next.handle(request);
+              }
+
               const modifiedRequest = request.clone({
                 setHeaders: {
                     'Authorization': `Bearer ${user.accessToken}`

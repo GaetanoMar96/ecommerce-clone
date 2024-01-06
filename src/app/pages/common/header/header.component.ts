@@ -70,6 +70,10 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['./cart'])
     }
 
+    goToFavourite() {
+      this.router.navigate(['./favourite'])
+    }
+
     logout() {
         this.authService.logout();
     }
