@@ -21,7 +21,9 @@ import { RegisterComponent,
   ProductSummaryComponent,
   PaymentComponent,
   CategoryComponent,
-  FavouriteProductsComponent
+  FavouriteProductsComponent,
+  OrderSummaryComponent,
+  AccountComponent
 } from './pages/index';
 import { AuthInterceptorService, ErrorInterceptorService } from './services/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -62,7 +64,9 @@ import { firebaseConfig } from './envs/env_firebase';
     ProductSummaryComponent,
     PaymentComponent,
     CategoryComponent,
-    FavouriteProductsComponent
+    FavouriteProductsComponent,
+    OrderSummaryComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

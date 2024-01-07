@@ -1,0 +1,23 @@
+<div class="product-list" *ngFor="let order of orders; let i = index">
+    <div class="row">
+      <div class="col-4">
+        <div class="product-image">
+          <img [src]="'assets/shoes_images/' + order.image" alt="{{order.name}}">
+        </div>    
+      </div>
+      <div class="col-4">
+        <div class="product-content">
+            <p>Name: {{order.name}}</p>
+            <p>Brand: {{order.brand}}</p>
+            <p>Color: {{order.color}}</p>
+            <p>Size: {{order.size}}</p>
+            <p>Price: €{{order.price}}</p>
+          
+        </div>
+      </div>     
+    </div>
+    <div class="divider">
+      <mat-divider></mat-divider>
+    </div>
+    
+  </div>

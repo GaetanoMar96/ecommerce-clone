@@ -11,7 +11,8 @@ import { RegisterComponent,
   CheckoutComponent,
   PaymentComponent,
   CategoryComponent,
-  FavouriteProductsComponent } from './pages/index';
+  FavouriteProductsComponent,
+  AccountComponent } from './pages/index';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'favourite', component: FavouriteProductsComponent },
+  { path: 'account', component: AccountComponent },
   { path: '**', redirectTo: '/home' }
 ];
 

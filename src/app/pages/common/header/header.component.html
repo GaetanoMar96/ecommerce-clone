@@ -20,7 +20,7 @@
       
 
         <button mat-icon-button (click)="goToCart()">
-            <mat-icon matBadge="{{value}}" matBadgeColor="primary" class="cart">shopping_cart</mat-icon>
+            <mat-icon matBadge="{{value}}" matBadgeColor="primary" class="cart" aria-hidden="false">shopping_cart</mat-icon>
         </button>
         <ul class="navbar-nav">
           <button mat-icon-button [matMenuTriggerFor]="menu">

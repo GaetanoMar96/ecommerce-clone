@@ -31,7 +31,8 @@
                 <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color" *ngFor="let image of product.images">
                     <mat-button-toggle [value]="image.color" 
                     [checked]="color === image.color"
-                    (click)="selectedColor(image.color)">{{image.color}}</mat-button-toggle>
+                    (click)="selectedColor(image.color); toggle()"
+                    (change)="toggle()">{{image.color}}</mat-button-toggle>
                 </mat-button-toggle-group>
               </div>
               <div class="product-size">

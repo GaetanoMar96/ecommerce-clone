@@ -14,4 +14,6 @@ export * from './../pages/cart/cart.component';
 export * from './../pages/checkout/checkout.component';
 export * from './../pages/payment/payment.component';
 export * from './../pages/category/category.component';
-export * from './favourite/favourite-products.component';
+export * from './../pages/favourite/favourite-products.component';
+export * from './../pages/common/order-summary/order-summary.component';
+export * from './../pages/account/account.component';

@@ -1,0 +1,40 @@
+<!-- account.component.html -->
+<div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <ul class="list-group">
+            <li class="list-group-item" (click)="switchTab('info')" [ngClass]="{ 'active': activeTab === 'info' }">
+              Account Information
+            </li>
+            <li class="list-group-item" (click)="switchTab('orders')" [ngClass]="{ 'active': activeTab === 'orders' }">
+              Orders
+            </li>
+            <!-- Add more sidebar options if needed -->
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- Main content area -->
+        <div *ngIf="activeTab === 'info'">
+          <!-- Display User Information -->
+          <h2>Account Information</h2>
+          <div>
+            <p>Email: {{ user.email }}</p>
+            <!-- Add more user information fields -->
+          </div>
+          <!-- Form for modifying user information -->
+          <!-- Modify information form -->
+        </div>
+        <div *ngIf="activeTab === 'orders'">
+          <!-- Display Orders -->
+          <h2>Previous Orders</h2>
+          <div class="col">
+            <app-order-summary [orders]="orders"></app-order-summary>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
