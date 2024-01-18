@@ -9,13 +9,10 @@ import { Order } from './../../models/index';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  user = {
-    userId: "EaPOwsoJBpe8HeSfcepAIfupxw43",
-    email: "myemail"
-  };
+  
   orders: Order[] = []; 
   userId: string = '';
-  activeTab = 'info'
+  activeTab = 'orders'
 
   constructor(private authService: AuthService,
     private ordersService: OrdersService) { }
@@ -24,7 +21,7 @@ export class AccountComponent implements OnInit {
     // Fetch user data
     if(this.authService.userValue && this.authService.userValue?.userId) {
         this.userId = this.authService.userValue?.userId;
-        this.ordersService.getOrdersByUserId(this.user.userId)
+        this.ordersService.getOrdersByUserId(this.userId)
         .subscribe((ordersData) => {
             this.orders = ordersData;
         });

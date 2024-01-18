@@ -60,13 +60,15 @@ export class LoginComponent implements OnInit {
   }
 
   onGoogleLogin() {
-    this.authService.loginWithGoogle()
-    .then(() => {
+    this.loading = true;
+    try {
+      this.authService.loginWithGoogle();
       this.router.navigate(['home']);
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error('Login with Google failed:', error);
-    });
+    } finally {
+      this.loading = false;
+    }
   }
 
   goToRegister() {

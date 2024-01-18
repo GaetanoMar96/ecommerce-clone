@@ -5,7 +5,7 @@
       <button mat-button class="btn" (click)="navigateToCategory()">Shop</button>
   </div>
   <div *ngIf="featuredProducts.length != 0" class="featured-title">Featured Products</div>
-    <div *ngIf="featuredProducts.length === 6" class="featured-products">
+    <div *ngIf="featuredProducts.length != 0" class="featured-products">
       <div class="product-grid">
           <div *ngFor="let product of featuredProducts" class="product-tile">
             <mat-card class="product-content">

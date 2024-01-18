@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { Product, SelectedProduct, ProductFilters } from './../models/index';
 import { BehaviorSubject, Observable } from'rxjs';
 import { tap, map } from 'rxjs/operators'
-import { HttpClient } from '@angular/common/http';
-import { environment } from './../envs/env_local';
-import { ApiPaths } from './../helpers/api-paths';
 import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/compat/firestore';
 
 @Injectable({
@@ -27,10 +24,14 @@ export class ProductsService {
     private cachedProducts$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
 
     constructor(
-        private http: HttpClient,
         private angularFirestore: AngularFirestore) {
-            this.productsCollection = angularFirestore.collection<Product>('products');
-            this.loadProducts();
+            this.productsCollection = this.angularFirestore.collection<Product>('products');
+            this.productsCollection.valueChanges()
+            .subscribe(
+              (products: Product[]) => {
+                this.cachedProducts$.next(products) 
+              }
+            );
     }
 
     //GETTERS and SETTERS
@@ -67,23 +68,15 @@ export class ProductsService {
 
     //CACHING
     getAllProducts(): Observable<Product[]> {
-      if (this.cachedProducts$.getValue().length == 0) {
-        return this.productsCollection.valueChanges()
-        .pipe(
-          tap((products: Product[]) => {
-            this.cachedProducts$.next(products);
-          })
-          )  
-      } else 
-        return this.cachedProducts$.asObservable();
-    }
-    
-    private loadProducts(): void {
-        this.productsCollection.valueChanges().pipe(
-          tap((products: Product[]) => {
-            this.cachedProducts$.next(products);
-          })
-        ).subscribe();
+      return this.productsCollection.valueChanges()
+      /*this.productsCollection.valueChanges()
+      .subscribe(
+        (products: Product[]) => {
+          this.cachedProducts$.next(products) 
+          return this.cachedProducts$.asObservable()
+        }
+      );*/
+      
     }
 
     //API FIREBASE 

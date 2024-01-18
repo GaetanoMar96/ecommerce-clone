@@ -5,9 +5,9 @@
         <!-- Sidebar -->
         <div class="sidebar">
           <ul class="list-group">
-            <li class="list-group-item" (click)="switchTab('info')" [ngClass]="{ 'active': activeTab === 'info' }">
+            <!--<li class="list-group-item" (click)="switchTab('info')" [ngClass]="{ 'active': activeTab === 'info' }">
               Account Information
-            </li>
+            </li>-->
             <li class="list-group-item" (click)="switchTab('orders')" [ngClass]="{ 'active': activeTab === 'orders' }">
               Orders
             </li>
@@ -19,13 +19,60 @@
         <!-- Main content area -->
         <div *ngIf="activeTab === 'info'">
           <!-- Display User Information -->
-          <h2>Account Information</h2>
-          <div>
-            <p>Email: {{ user.email }}</p>
+
             <!-- Add more user information fields -->
-          </div>
+          
           <!-- Form for modifying user information -->
-          <!-- Modify information form -->
+          <!--<div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Manage Your Account</h2>
+                </div>
+            </div>
+        
+            <mat-divider class="divider" [inset]="true"></mat-divider>
+        
+            <div class="row">
+                <div class="col-12">
+                    <h3>Change your password</h3>
+                </div>
+            </div>
+        
+            <div class="row">
+        
+                <div class="col col-md-4">
+                    <mat-form-field>
+                        <mat-label>Your old password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="oldPassword">
+                        <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+        
+                <div class="col col-md-4">
+                    <mat-form-field>
+                        <mat-label>Your new password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="newPassword">
+                        <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+        
+                <div class="col col-md-4">
+                    <div class="example-button-container">
+                        <button mat-raised-button color="warn" aria-label="Example icon button with a home icon"
+                            (click)="changePassword()" [disabled]="isButtonDisabled">
+                            Change password
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+           Modify information form -->
         </div>
         <div *ngIf="activeTab === 'orders'">
           <!-- Display Orders -->

@@ -61,10 +61,10 @@ export class AuthService {
         }
     }
 
-    async loginWithGoogle(): Promise<void> {
+    loginWithGoogle(): void {
         try {
           const provider = new GoogleAuthProvider();
-          await this.afAuth.signInWithRedirect(provider);
+          this.afAuth.signInWithRedirect(provider);
         } catch (error) {
           throw error; // Handle login failure
         }
@@ -73,7 +73,6 @@ export class AuthService {
     async logout(): Promise<void> {
         try {
             await this.afAuth.signOut();
-            // Redirect to login page
             this.router.navigate(['/login']);
         } catch (error) {
             throw error; 

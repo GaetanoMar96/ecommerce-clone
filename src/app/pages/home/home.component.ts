@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['login']);
     } else {
       //get all products
-      
       this.productsService.getAllProducts()
       .subscribe(
         {
