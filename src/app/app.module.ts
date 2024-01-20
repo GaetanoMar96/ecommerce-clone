@@ -43,6 +43,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { firebaseConfig } from './envs/env_firebase';
 
 @NgModule({
@@ -90,6 +91,7 @@ import { firebaseConfig } from './envs/env_firebase';
     MatCheckboxModule,
     MatButtonToggleModule,
     MatRadioModule,
+    MatProgressSpinnerModule,
     AngularFireModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseConfig),

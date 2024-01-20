@@ -4,13 +4,20 @@
       <h2 class="overlay-text">Find your favourite pairs of shoes!</h2>
       <button mat-button class="btn" (click)="navigateToCategory()">Shop</button>
   </div>
-  <div *ngIf="featuredProducts.length != 0" class="featured-title">Featured Products</div>
-    <div *ngIf="featuredProducts.length != 0" class="featured-products">
+  <div *ngIf="loading; else showProducts" class="loading-indicator">
+    <!-- Loading indicator or message -->
+    <mat-spinner></mat-spinner>
+    <!-- You can customize the loading message here -->
+    <p>Loading...</p>
+  </div>
+  <ng-template #showProducts>
+  <div *ngIf="featuredProducts.length === 6" class="featured-title">Featured Products</div>
+    <div *ngIf="featuredProducts.length === 6" class="featured-products">
       <div class="product-grid">
           <div *ngFor="let product of featuredProducts" class="product-tile">
             <mat-card class="product-content">
               <!-- Image -->
-              <img class="product-poster" [src]="'assets/shoes_images/' + product.images[0].image" alt="Brand Image">
+              <img *ngIf="product.images?.[0]?.image" class="product-poster" [src]="'assets/shoes_images/' + product.images[0].image" alt="Brand Image">
             
               <mat-card-content>
                 <!-- Title -->
@@ -24,5 +31,6 @@
           </div>
         </div>
       </div>
+    </ng-template>
 </div>
   

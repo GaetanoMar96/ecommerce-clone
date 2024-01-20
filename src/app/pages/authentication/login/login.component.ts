@@ -49,8 +49,9 @@ export class LoginComponent implements OnInit {
       };
       
       try {
-        await this.authService.login(request);
-        this.router.navigate(['home']);
+        await this.authService.login(request).then(() => {
+          this.router.navigate(['home']);
+        });
       } catch (error) {
         console.error(error);
       } finally {
@@ -59,11 +60,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onGoogleLogin() {
+  async onGoogleLogin() {
     this.loading = true;
     try {
-      this.authService.loginWithGoogle();
-      this.router.navigate(['home']);
+      await this.authService.loginWithGoogle().then(() => {
+        this.router.navigate(['home']);
+      });
     } catch (error) {
       console.error('Login with Google failed:', error);
     } finally {

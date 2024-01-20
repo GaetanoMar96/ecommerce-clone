@@ -57,14 +57,15 @@ export class AuthService {
                 request.password
             );
         } catch (error) {
+            console.error('Login error:', error);
             throw error; // Handle login failure
         }
     }
 
-    loginWithGoogle(): void {
+    async loginWithGoogle(): Promise<void> {
         try {
           const provider = new GoogleAuthProvider();
-          this.afAuth.signInWithRedirect(provider);
+          await this.afAuth.signInWithRedirect(provider);
         } catch (error) {
           throw error; // Handle login failure
         }

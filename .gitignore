@@ -47,3 +47,5 @@ ecommerce-44c4e-firebase-adminsdk.json
 ecommerce_products.json
 *.log
 /.firebase
+
+/src/assets/shoes_images

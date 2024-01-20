@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product, SelectedProduct, ProductFilters } from './../models/index';
 import { BehaviorSubject, Observable } from'rxjs';
-import { tap, map } from 'rxjs/operators'
+import { first, map } from 'rxjs/operators'
 import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/compat/firestore';
 
 @Injectable({
@@ -26,13 +26,7 @@ export class ProductsService {
     constructor(
         private angularFirestore: AngularFirestore) {
             this.productsCollection = this.angularFirestore.collection<Product>('products');
-            this.productsCollection.valueChanges()
-            .subscribe(
-              (products: Product[]) => {
-                this.cachedProducts$.next(products) 
-              }
-            );
-    }
+          }
 
     //GETTERS and SETTERS
     setProduct(product: Product) {
@@ -66,30 +60,24 @@ export class ProductsService {
         this.productsSubjList.next([]);
     }
 
-    //CACHING
     getAllProducts(): Observable<Product[]> {
-      return this.productsCollection.valueChanges()
-      /*this.productsCollection.valueChanges()
-      .subscribe(
-        (products: Product[]) => {
-          this.cachedProducts$.next(products) 
-          return this.cachedProducts$.asObservable()
-        }
-      );*/
-      
+      return this.productsCollection.snapshotChanges()
+        .pipe(
+          first(), // Take the first emission to get the initial data
+          map(actions => actions.map(a => a.payload.doc.data() as Product))
+        );
     }
-
-    //API FIREBASE 
+ 
     getProductsByGender(gender: string): Observable<Product[]> {
-        return this.cachedProducts$.pipe(
-            map(products => products.filter(product => product.gender === gender))
-        );
+      return this.getAllProducts().pipe(
+        map(products => products.filter(product => product.gender === gender))
+      );
     }
-
+  
     getProductsByFilters(productFilters: ProductFilters): Observable<Product[]> {
-        return this.cachedProducts$.pipe(
-            map(products => this.filterProducts(products, productFilters))
-        );
+      return this.getAllProducts().pipe(
+        map(products => this.filterProducts(products, productFilters))
+      );
     }
 
     private filterProducts(products: Product[], filters: ProductFilters): Product[] {
