@@ -1,7 +1,7 @@
 # EcommerceClone
 
 This repository houses the EcommerceClone project, an Angular and TypeScript-based application designed for online commerce experiences. It's deployed using Firebase, with Firestore as its primary database.
-The backend was made with Java17, Spring boot and mongoDB (repository ecommerce) but for deploy it i switched all the backend to typescript.
+The backend was made with Java17, Spring boot and mongoDB (repository ecommerce).
 
 ## Overview
 
@@ -23,16 +23,8 @@ Run `ng serve` to initiate the development server. Access the application via `h
 
 ### Hosting
 
-The site is accessible via this link .
+The site is accessible via this link https://ecommerce-44c4e.web.app.
 
 ### Build
 
 Execute `ng build` to create build artifacts. Output is stored in the `dist/` directory for deployment.
-
-### Testing
-
-Use `ng test` for unit testing via Karma. For end-to-end tests, use `ng e2e` after implementing an appropriate end-to-end testing package.
-
-### Further Assistance
-
-For more information on Angular CLI commands, refer to `ng help` or visit [Angular CLI Overview and Command Reference](https://angular.io/cli).

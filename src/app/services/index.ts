@@ -8,3 +8,4 @@ export * from './error-interceptor.service';
 export * from './header.service';
 export * from './favourite-products.service';
 export * from './orders.service';
+export * from './utils.service';

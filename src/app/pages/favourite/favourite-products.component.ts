@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProductsService, FavouriteProductsService } from '../../services/index';
+import { ProductsService, FavouriteProductsService, UtilsService } from '../../services/index';
 import { Product } from '../../models/index';
 import { Subscription } from 'rxjs';
 
@@ -17,23 +17,17 @@ export class FavouriteProductsComponent implements OnInit {
         private router: Router,
         private productsService: ProductsService,
         private favouriteProductsService: FavouriteProductsService,
+        private utilsService: UtilsService
     ) { }
 
     ngOnInit(): void {
         this.productSubscription = this.favouriteProductsService.getFavouriteProducts()
             .subscribe((value: Product[]) => {
-                this.products = this.chunkArray(value, 4); // Split into rows of 4 products
+                this.products = this.utilsService.chunkArray(value, 4); // Split into rows of 4 products
             });
     }
 
-    // Function to split array into chunks (rows of 4 products)
-    chunkArray(arr: Product[], size: number): Product[][] {
-        const chunkedArray: Product[][] = [];
-        for (let i = 0; i < arr.length; i += size) {
-            chunkedArray.push(arr.slice(i, i + size));
-        }
-        return chunkedArray;
-    }
+    
 
     removeToFavorites(event: Event, index: number) {
         event.stopPropagation();

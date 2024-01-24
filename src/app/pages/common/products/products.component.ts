@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { AuthService, ProductsService, FavouriteProductsService } from './../../../services/index';
-import { Product, CheckBoxColor, CheckBoxBrand, PriceRange, ProductFilters } from './../../../models/index';
+import { AuthService, ProductsService, FavouriteProductsService, UtilsService } from './../../../services/index';
+import { Product, CheckBoxColor, PriceRange, ProductFilters } from './../../../models/index';
 import { Router } from '@angular/router';
 import { Subscription } from'rxjs';
 import { MatSlider } from '@angular/material/slider';
@@ -54,7 +54,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private productsService: ProductsService,
-    private favouriteProductsService: FavouriteProductsService) {
+    private favouriteProductsService: FavouriteProductsService,
+    private utilsService: UtilsService) {
   }
 
   ngOnInit() {   

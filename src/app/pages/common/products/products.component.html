@@ -81,7 +81,8 @@
     <div class="col-lg-8 col-md-6">
         <div *ngIf="products.length != 0" class="featured-products">
           <div class="product-grid">
-              <div *ngFor="let product of products" class="product-tile">
+            
+              <div *ngFor="let product of products" class="product-tile" [ngClass]="{'single-item': products.length === 1}">
                 <mat-card class="product-content" (click)="goToProduct(product)">
 
                   <button mat-icon-button class="favorite-icon-button" (click)="addToFavorites($event, product)">
