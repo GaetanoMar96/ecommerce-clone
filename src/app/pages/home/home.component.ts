@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, ProductsService } from './../../services/index';
 import { Product } from './../../models/index';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,10 @@ import { Product } from './../../models/index';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  
-  featuredProducts: Product[] = [];
 
+  private productsSubscription: Subscription = new Subscription();
+  featuredProducts: Product[] = [];
+  loading: boolean = true;
   constructor(private router: Router,
     private authService: AuthService,
     private productsService: ProductsService) {
@@ -19,27 +21,29 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() { 
-    console.log(this.authService.user)
     if (this.authService.userValue == undefined) {
       this.router.navigate(['login']);
     } else {
       //get all products
-      this.productsService.getAllProducts()
-      .subscribe(
-        {
+      this.productsSubscription = this.productsService.getAllProducts()
+        .subscribe({
           next: (products: Product[]) => {
-            //add only 6 products to be shown in the home page
-            for(let i = 0; i < 6; i++) {
-              this.featuredProducts.push(products[i]);
-            }
+            // add only 6 products to be shown on the home page
+            this.featuredProducts = products.slice(0, 6);
+            this.loading = false;
           },
           error: error => console.log(error)
-        }
-      );
+        });
     }
   }
 
   navigateToCategory() {
     this.router.navigate(['/category']);
+  }
+
+  ngOnDestroy() {
+    if (this.productsSubscription) {
+      this.productsSubscription.unsubscribe();
+    }
   }
 }

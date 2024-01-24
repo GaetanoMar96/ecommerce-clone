@@ -1,9 +1,12 @@
-// Import necessary modules
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaymentIntent, SelectedProduct, ShipData } from './../../models/index';
+import { PaymentIntent, SelectedProduct, ShipData, Order } from './../../models/index';
 import { Subscription } from'rxjs';
-import { PaymentService, ProductsService, HeaderService } from './../../services/index';
+import { AuthService, 
+  PaymentService, 
+  ProductsService, 
+  HeaderService, 
+  OrdersService } from './../../services/index';
 
 @Component({
   selector: 'app-payment',
@@ -28,14 +31,17 @@ export class PaymentComponent {
     cardNumber: string = '';
     cvc: string = '';
     expDate: string = '';
+    userId: string = '';
 
     private productSubscription: Subscription = new Subscription();
     private shipSubscription: Subscription = new Subscription();
 
     constructor(private router: Router,
+        private authService: AuthService,
         private productsService: ProductsService,
         private paymentService: PaymentService,
-        private headerService: HeaderService) {
+        private headerService: HeaderService,
+        private ordersService: OrdersService) {
         
     }
   
@@ -58,6 +64,9 @@ export class PaymentComponent {
               },
             error: (err) => console.log(err)
           }) 
+          
+          if(this.authService.userValue && this.authService.userValue?.userId)
+            this.userId = this.authService.userValue?.userId;
     }
 
     showTestCardInfo() {
@@ -83,6 +92,7 @@ export class PaymentComponent {
       if(!this.success) {
         if (this.selectedMethod === "cash") {
           this.success = true;
+          this.addOrders()
           return;
         }
         if (this.selectedMethod === "credit_card" && this.checkCardInfo()) {
@@ -96,8 +106,8 @@ export class PaymentComponent {
           this.paymentService.postProcessPayment(request).subscribe(
             {
               next: (value: any) => {
-                console.log(value)
                 this.success = true
+                this.addOrders()
               },
               error: (err) => console.log(err)
             }
@@ -108,11 +118,26 @@ export class PaymentComponent {
     }
 
     checkCardInfo(): boolean {
-      console.log(this.cardNumber)
-      console.log(this.expDate)
       return this.cardNumber === '4242 4242 4242 4242'
               && this.cvc === '222'
               && this.expDate === '12/2024'
+    }
+
+    addOrders(): void {
+      this.products.forEach(
+        product => {
+          let order: Order = {
+            userId: this.userId, 
+            name: product.name,
+            brand: product.brand,
+            image: product.image,
+            price: product.price,
+            color: product.color,
+            size: product.size
+          }
+          this.ordersService.addOrder(order)
+        }
+      )
     }
 
     goBack() {

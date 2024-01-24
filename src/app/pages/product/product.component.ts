@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DialogService, ProductsService, HeaderService } from './../../services/index';
 import { Subscription } from'rxjs';
 import { take } from'rxjs/operators';
-import { SelectedProduct, Product } from './../../models/index';
+import { SelectedProduct, Image } from './../../models/index';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +16,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   size: number = 0; //default
   color: string = ''; //default: black
   disabled: boolean = true; //used to disable cart button
+  productImg: string = '';
 
   private productSubscription: Subscription = new Subscription();
 
@@ -30,7 +31,10 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.section = history.state.section;
     this.productSubscription = this.productsService.getProduct()
     .subscribe({
-      next: (value) => this.product = value,
+      next: (value) => {
+        this.product = value,
+        this.productImg = this.product.images[0].image
+      },
       error: (err) => console.log(err)
     }) 
   }
@@ -46,6 +50,8 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.color = ''; 
     } else {
       this.color = color; 
+      let arr = this.productImg.split('-')
+      this.productImg = arr[0] + '-' + arr[1] + '-' + this.color + '.png'
     }
   }
 

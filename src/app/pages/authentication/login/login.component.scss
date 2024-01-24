@@ -85,3 +85,15 @@
     font-size: 16px;
     margin-right: 10px;
 }
+
+.google-icon {
+	position: absolute;
+	left: 66%; /* Adjust the left position of the icon */
+	top: 79.5%;
+	transform: translateY(-50%);
+	width: 20px; /* Adjust the width of the icon */
+	height: 20px; /* Adjust the height of the icon */
+	background-image: url('/assets/google.png'); 
+	background-size: cover;
+	border-radius: 15px;
+}

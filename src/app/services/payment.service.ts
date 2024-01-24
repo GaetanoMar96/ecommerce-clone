@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Product, ShipData, PaymentIntent } from './../models/index';
 import { BehaviorSubject, Observable } from'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from './../envs/env_local';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { stripeKey } from './../envs/env_firebase';
 import { ApiPaths } from './../helpers/api-paths';
 
 @Injectable({
@@ -35,7 +35,17 @@ export class PaymentService {
     //API
 
     postProcessPayment(paymentIntent: PaymentIntent): Observable<any> {
-        return this.http.post<any>(`${environment.apiUrl}/${ApiPaths.Payment}/process`, paymentIntent);
+        const headers = new HttpHeaders({
+          Authorization: 'Bearer ' + stripeKey,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        });
+    
+        const body = new URLSearchParams();
+        body.set('payment_method', paymentIntent.paymentMethodId);
+        body.set('currency', paymentIntent.currency);
+        body.set('amount', paymentIntent.amount);
+    
+        return this.http.post<any>(`https://api.stripe.com/v1/payment_intents`, body.toString(), { headers });
     }
 
 }

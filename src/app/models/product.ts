@@ -3,14 +3,14 @@ export interface Product {
     brand?: string;
     description?: string;
     price?: number;
-    gender?: number;
+    gender?: string;
     images: Array<Image>;
 }
 
+
 export interface Image {
-    image?: string
-    imageBin?: string;
-    color?: string;
+    color: string;
+    image: string
 }
 
 export interface SelectedProduct { 

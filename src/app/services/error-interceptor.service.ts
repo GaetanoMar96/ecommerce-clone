@@ -17,7 +17,6 @@ export class ErrorInterceptorService implements HttpInterceptor {
                 const token: string | undefined = this.authService.userValue.accessToken;
                 if (token != undefined && this.authService.tokenExpired(token)) {
                     // auto logout if api returned 500 and token expired
-                    console.error(err);
                     this.authService.logout();
                 }
             }

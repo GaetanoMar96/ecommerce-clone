@@ -1,0 +1,18 @@
+<div class="container">
+    <h2 class="favorite-title">Favorite Shoes</h2>
+    <div *ngIf="products.length == 0" class="empty-state">
+        <p>No favorite products selected yet.</p>
+        <button mat-button class="btn" routerLink="/home">Return to home</button>
+    </div>
+    <div *ngIf="products.length != 0">
+        <div class="row" *ngFor="let row of products">
+            <div *ngFor="let product of row; let j = index" class="col image-container">
+                <button mat-icon-button class="favorite-icon-button" (click)="removeToFavorites($event, j)">
+                    <mat-icon class="favorite-icon mat-warn">favorite_border</mat-icon>
+                </button>
+                <img [src]="'assets/shoes_images/' + product.images[0].image" class="rowimg largeposter img-fluid" 
+                (click)="goToProduct(product)"/>
+            </div>
+        </div>
+    </div>
+</div>

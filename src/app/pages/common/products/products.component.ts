@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { AuthService, ProductsService } from './../../../services/index';
-import { Product, CheckBoxColor, CheckBoxBrand, PriceRange, ProductFilters } from './../../../models/index';
+import { AuthService, ProductsService, FavouriteProductsService, UtilsService } from './../../../services/index';
+import { Product, CheckBoxColor, PriceRange, ProductFilters } from './../../../models/index';
 import { Router } from '@angular/router';
 import { Subscription } from'rxjs';
 import { MatSlider } from '@angular/material/slider';
@@ -53,7 +53,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor( 
     private authService: AuthService,
     private router: Router,
-    private productsService: ProductsService) {
+    private productsService: ProductsService,
+    private favouriteProductsService: FavouriteProductsService,
+    private utilsService: UtilsService) {
   }
 
   ngOnInit() {   
@@ -84,7 +86,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   getFilteredData(): void {
     //call service
     let colors = Object.keys(this.checkBoxColor).filter(key => this.checkBoxColor[key])
-    console.log(colors)
+    
     this.productFilters = {
       gender: this.gender,
       minPrice: this.price.min,
@@ -104,6 +106,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   onBrandSelectionChange(brand: string) {
     this.selectedBrand = brand;
+  }
+
+  addToFavorites(event: Event, product: Product): void {
+    event.stopPropagation();
+    this.favouriteProductsService.setFavouriteProducts(product);
   }
 
   ngOnDestroy(): void {

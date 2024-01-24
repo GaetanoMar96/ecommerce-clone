@@ -3,10 +3,8 @@ import { Router } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
-  FormControl,
   Validators,
 } from '@angular/forms';
-import { take } from 'rxjs/operators';
 import { AuthRequest } from '../../../models/index';
 import { AuthService } from '../../../services/auth.service';
 
@@ -39,7 +37,7 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
 
     if (this.form.valid) {
@@ -49,20 +47,29 @@ export class LoginComponent implements OnInit {
         email: this.f.email.value,
         password: this.f.password.value,
       };
-
-      this.authService
-        .login(request)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.router.navigateByUrl('home');
-          },
-          error: (error) => {
-            //create form error
-            console.log(error);
-            this.loading = false;
-          },
+      
+      try {
+        await this.authService.login(request).then(() => {
+          this.router.navigate(['home']);
         });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    }
+  }
+
+  async onGoogleLogin() {
+    this.loading = true;
+    try {
+      await this.authService.loginWithGoogle().then(() => {
+        this.router.navigate(['home']);
+      });
+    } catch (error) {
+      console.error('Login with Google failed:', error);
+    } finally {
+      this.loading = false;
     }
   }
 

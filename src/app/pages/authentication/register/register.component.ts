@@ -8,8 +8,7 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { take } from 'rxjs/operators';
-import { RegisterRequest, Role, AuthResponse } from '../../../models/index';
+import { RegisterRequest, Role } from '../../../models/index';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -31,7 +30,7 @@ export class RegisterComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email, this.validateEmail]],
-        password: ['', [Validators.required, this.validatePassword]],
+        password: ['', [Validators.required, Validators.minLength(6), this.validatePassword]],
       });
   }
 
@@ -44,7 +43,7 @@ export class RegisterComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
@@ -55,19 +54,14 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
 
     const request: RegisterRequest = this.getRequest();
-    this.authService
-      .register(request)
-      .pipe(take(1))
-      .subscribe({
-        next: (response: AuthResponse) => {
-          // valid registration navigate to log in form
-          this.router.navigate(['/login']);
-        },
-        error: (error) => {
-          console.log(error);
-          this.loading = false;
-        },
-      });
+    try {
+      await this.authService.register(request);
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   private getRequest(): RegisterRequest {

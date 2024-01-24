@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Product, SelectedProduct, ProductFilters } from './../models/index';
 import { BehaviorSubject, Observable } from'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from './../envs/env_local';
-import { ApiPaths } from './../helpers/api-paths';
+import { first, map } from 'rxjs/operators'
+import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -14,17 +13,22 @@ export class ProductsService {
         brand: '',
         description: '',
         price: 0,
-        gender: 0,
+        gender: '',
         images: []
     };
 
     private productSubj = new BehaviorSubject<Product>(this._product);
     private productsSubjList = new BehaviorSubject<SelectedProduct[]>([]);
 
-    constructor(
-        private http: HttpClient) {
-    }
+    private productsCollection: AngularFirestoreCollection<Product>;
+    private cachedProducts$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
 
+    constructor(
+        private angularFirestore: AngularFirestore) {
+            this.productsCollection = this.angularFirestore.collection<Product>('products');
+          }
+
+    //GETTERS and SETTERS
     setProduct(product: Product) {
         this.productSubj.next(product);
     }
@@ -56,18 +60,50 @@ export class ProductsService {
         this.productsSubjList.next([]);
     }
 
-    //API
-
     getAllProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}`);
+      return this.productsCollection.snapshotChanges()
+        .pipe(
+          first(), // Take the first emission to get the initial data
+          map(actions => actions.map(a => a.payload.doc.data() as Product))
+        );
     }
-
+ 
     getProductsByGender(gender: string): Observable<Product[]> {
-        return this.http.get<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/` + gender);
+      return this.getAllProducts().pipe(
+        map(products => products.filter(product => product.gender === gender))
+      );
     }
-
+  
     getProductsByFilters(productFilters: ProductFilters): Observable<Product[]> {
-        return this.http.post<Product[]>(`${environment.apiUrl}/${ApiPaths.Products}/filters`, productFilters);
+      return this.getAllProducts().pipe(
+        map(products => this.filterProducts(products, productFilters))
+      );
     }
 
+    private filterProducts(products: Product[], filters: ProductFilters): Product[] {
+        return products.filter(product => {
+          let valid = true;
+    
+          if (filters.gender && product.gender !== filters.gender) {
+            valid = false;
+          }
+          if (filters.brand && product.brand !== filters.brand) {
+            valid = false;
+          }
+          if (filters.minPrice && product.price && product.price < filters.minPrice) {
+            valid = false;
+          }
+          if (filters.maxPrice && product.price && product.price > filters.maxPrice) {
+            valid = false;
+          }
+          if (filters.colors && filters.colors.length > 0 && product.images) {
+            const productColors = product.images.map(image => image.color);
+            const intersect = productColors.filter(color => filters.colors.includes(color));
+            if (intersect.length === 0) {
+              valid = false;
+            }
+          }    
+          return valid;
+        });
+    }
 }

@@ -43,7 +43,7 @@
 .featured-products {
     width: 1000px;
     display: flex;
-    justify-content: space-around;
+    //justify-content: space-around;
     text-align: center;
     margin-top: 10px;
   }
@@ -56,15 +56,34 @@
   }
   
   .product-tile {
-    flex-basis: calc(33.33%  - 30px); /* Two columns with gutter */
+    width: calc(33.33%  - 30px); /* Two columns with gutter */
     background-color: white;
     border-radius: 20px;
+  }
+
+  .single-item {
+    width: calc(60%  - 30px);
+    background-color: white;
+    border-radius: 20px;
+
   }
   
   .product-content {
     text-align: center;
-    border-radius: 20px;
-  
+    border-radius: 20px !important;
+    
+    .favorite-icon-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      z-index: 1; /* Ensure the icon is above other content */
+    }
+    
+    .favorite-icon {
+      font-size: 24px;
+      color: black; 
+    }
+
     .product-poster {
       max-width: 100%;
       height: auto;
@@ -92,3 +111,4 @@
       font-family: 'Poppins', sans-serif;
     }
   }
+
