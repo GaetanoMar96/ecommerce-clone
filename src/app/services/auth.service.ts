@@ -22,11 +22,11 @@ export class AuthService {
         // Subscribe to Firebase Auth state changes
         this.afAuth.authState.subscribe((user) => {
             if (user) {
-            user.getIdToken().then((token) => {
-                const userData: AuthResponse = { userId: user.uid, accessToken: token };
-                this.userSubject.next(userData);
-                localStorage.setItem('user', JSON.stringify(userData));
-            });
+                user.getIdToken().then((token) => {
+                    const userData: AuthResponse = { userId: user.uid, accessToken: token };
+                    this.userSubject.next(userData);
+                    localStorage.setItem('user', JSON.stringify(userData));
+                });
             } else {
                 this.userSubject.next(null);
                 localStorage.removeItem('user');
@@ -42,9 +42,9 @@ export class AuthService {
     async register(request: RegisterRequest): Promise<void> {
         try {
             await this.afAuth.createUserWithEmailAndPassword(
-                request.email, 
+                request.email,
                 request.password
-            );            
+            );
         } catch (error) {
             throw error; // Handle registration failure
         }
@@ -53,7 +53,7 @@ export class AuthService {
     async login(request: AuthRequest): Promise<void> {
         try {
             await this.afAuth.signInWithEmailAndPassword(
-                request.email, 
+                request.email,
                 request.password
             );
         } catch (error) {
@@ -64,25 +64,41 @@ export class AuthService {
 
     async loginWithGoogle(): Promise<void> {
         try {
-          const provider = new GoogleAuthProvider();
-          await this.afAuth.signInWithRedirect(provider);
+            const provider = new GoogleAuthProvider();
+            await this.afAuth.signInWithRedirect(provider);
         } catch (error) {
-          throw error; // Handle login failure
+            throw error; // Handle login failure
         }
     }
 
-    async logout(): Promise<void> {
-        try {
-            await this.afAuth.signOut();
-            this.router.navigate(['/login']);
-        } catch (error) {
-            throw error; 
-        }
+    async changePassword(newPassword: string): Promise<void> {
+        await this.afAuth.currentUser.then(
+            user => {
+                if (user) {
+                     user.updatePassword(newPassword)
+                        .then(() => {
+                            console.log('Password updated successfully');
+                        })
+                        .catch((error) => {
+                            console.error('Error updating password:', error);
+                        });
+                }
+            }
+        );
     }
 
-    //utility method to check if token expired
-    tokenExpired(token: string): boolean {
-        const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp;
-        return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+    async logout(): Promise < void> {
+    try {
+        await this.afAuth.signOut();
+        this.router.navigate(['/login']);
+    } catch(error) {
+        throw error;
     }
+}
+
+//utility method to check if token expired
+tokenExpired(token: string): boolean {
+    const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp;
+    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+}
 }

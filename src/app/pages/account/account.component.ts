@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, OrdersService } from './../../services/index';
 import { Order } from './../../models/index';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -13,9 +14,12 @@ export class AccountComponent implements OnInit {
   orders: Order[] = []; 
   userId: string = '';
   activeTab = 'orders'
+  hide = true;
+  newPassword: string = '';
 
   constructor(private authService: AuthService,
-    private ordersService: OrdersService) { }
+    private ordersService: OrdersService,
+    private router: Router) { }
 
   ngOnInit() {
     // Fetch user data
@@ -32,12 +36,21 @@ export class AccountComponent implements OnInit {
     this.activeTab = tab
   }
 
+  toggle() {
+    this.hide = !this.hide
+  }
+
   // Method to handle password change
-  /*changePassword(newPassword: string) {
-    this.userService.changePassword(newPassword).subscribe(() => {
-      // Password changed successfully
-    }, (error) => {
-      // Handle error
-    });
-  }*/
+  async changePassword() {
+    if(this.newPassword !== '') {
+    try {
+      await this.authService.changePassword(this.newPassword)
+      .then(() => {
+        this.router.navigate(['home']);
+      });
+    } catch (error) {
+      console.error('Login with Google failed:', error);
+    }
+  }
+}
 }
